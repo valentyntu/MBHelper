@@ -6,6 +6,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: stretch;
+    align-items: center;
 }
 
 
@@ -13,4 +14,16 @@
     border: none;
     background-color: transparent;
     width: 50%;
+}
+
+.Product-input-left {
+    text-align: left;
+}
+
+.Product-input-right {
+    text-align: right;
+}
+
+.Product-value-separator{
+
 }

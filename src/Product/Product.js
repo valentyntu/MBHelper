@@ -11,9 +11,9 @@ class Product extends Component {
         return (
             <td className={"Product"}>
                 <div className={"Product-content"}>
-                    <input className={"Product-input"} placeholder={"buy"} type={"text"}/>
-                    /
-                    <input className={"Product-input"} placeholder={"sell"} type={"text"}/>
+                    <input className={"Product-input Product-input-right"} placeholder={"buy"} type={"text"}/>
+                    <div className={"mx-2"}>/</div>
+                    <input className={"Product-input Producct-input-left"} placeholder={"sell"} type={"text"}/>
                 </div>
             </td>
         )
