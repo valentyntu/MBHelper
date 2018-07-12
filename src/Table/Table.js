@@ -1,7 +1,21 @@
 import React, {Component} from 'react';
-import City from "../City/City";
-import Product from "../Product/Product";
+import ReactDOM from 'react-dom';
+import Modal from 'react-modal'
+import City from "./City/City";
+import Product from "./Product/Product";
 import './Table.css'
+
+const customStyles = {
+    content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)'
+    }
+};
+
 
 class Table extends Component {
     constructor(props) {
@@ -9,8 +23,12 @@ class Table extends Component {
         this.state = {
             cities: this.defaultCities,
             products: ["Cloth", "Grain", "Iron", "Tools"],
-            productsPrices: []
+            productsPrices: [],
+            modalIsOpen: false
         };
+        this.openModal = this.openModal.bind(this);
+        this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     defaultCities = [
@@ -37,6 +55,7 @@ class Table extends Component {
         "Wercheg",
         "Yalen"
     ];
+
 
     render() {
         return (
@@ -85,7 +104,7 @@ class Table extends Component {
                     })}
                     <tr>
                         <th className={"Table-heading"}>
-                            <button onClick={this.showCityModal}
+                            <button onClick={this.openModal}
                                     type={"button"}
                                     className={"Table-add-btn"}
                                     data-toggle="modal"
@@ -97,25 +116,29 @@ class Table extends Component {
                     </tbody>
                 </table>
 
-                <div className="modal" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Modal title</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p>Modal body text goes here.</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-primary">Save changes</button>
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
+                <div>
+                    <button onClick={this.openModal}>Open Modal</button>
+                    <Modal
+                        isOpen={this.state.modalIsOpen}
+                        onAfterOpen={this.afterOpenModal}
+                        onRequestClose={this.closeModal}
+                        style={customStyles}
+                        contentLabel="Example Modal"
+                    >
+
+                        <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+                        <button onClick={this.closeModal}>close</button>
+                        <div>I am a modal</div>
+                        <form>
+                            <input />
+                            <button>tab navigation</button>
+                            <button>stays</button>
+                            <button>inside</button>
+                            <button>the modal</button>
+                        </form>
+                    </Modal>
                 </div>
+
             </div>
 
         )
@@ -135,6 +158,18 @@ class Table extends Component {
         console.log(index);
         cities.splice(index, 1);
         this.setState({products: cities});
+    }
+
+    openModal() {
+        this.setState({modalIsOpen: true});
+    }
+
+    afterOpenModal() {
+        this.subtitle.style.color = '#f00';
+    }
+
+    closeModal() {
+        this.setState({modalIsOpen: false});
     }
 
     componentDidMount() {
