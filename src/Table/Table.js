@@ -7,8 +7,9 @@ class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cities: [],
-            products: ["Cloth", "Grain", "Iron", "Tools"]
+            cities: this.defaultCities,
+            products: ["Cloth", "Grain", "Iron", "Tools"],
+            productsPrices: []
         };
     }
 
@@ -35,7 +36,7 @@ class Table extends Component {
         "Veluca",
         "Wercheg",
         "Yalen"
-    ]
+    ];
 
     render() {
         return (
@@ -45,7 +46,16 @@ class Table extends Component {
                     <tr>
                         <th className={"Table-heading"}>#</th>
                         {this.state.products.map(product => {
-                            return <th className={"Table-heading"} key={product}>{product}</th>
+                            return <th className={"Table-heading"}
+                                       key={product}>
+                                <div className={"row justify-content-center align-items-center"}>
+                                    <div>{product}</div>
+                                    <button onClick={this.removeProduct.bind(this, product)}
+                                            className={"Table-remove-btn align-self-end mx-3"}>
+                                        -
+                                    </button>
+                                </div>
+                            </th>
                         })}
                         <th className={"Table-heading"}>
                             <button onClick={this.showProductModal}
@@ -65,6 +75,12 @@ class Table extends Component {
                             {this.state.products.map((product) => {
                                 return <Product key={city + "-" + product} buyPrice={0} sellPrice={0}/>
                             })}
+                            <td>
+                                <button className={"Table-remove-btn"}
+                                        onClick={this.removeCity.bind(this, city)}>
+                                    -
+                                </button>
+                            </td>
                         </tr>
                     })}
                     <tr>
@@ -105,8 +121,24 @@ class Table extends Component {
         )
     }
 
+    removeCity(cityName) {
+        let cities = this.state.cities;
+        let index = cities.indexOf(cityName);
+        console.log(index);
+        cities.splice(index, 1);
+        this.setState({cities: cities});
+    }
+
+    removeProduct(productName) {
+        let cities = this.state.products;
+        let index = cities.indexOf(productName);
+        console.log(index);
+        cities.splice(index, 1);
+        this.setState({products: cities});
+    }
+
     componentDidMount() {
-        this.setState({cities: this.defaultCities})
+
     }
 }
 

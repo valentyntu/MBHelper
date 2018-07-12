@@ -8,8 +8,19 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #288820;
+    background-color: #28a745;
     border-color: #28a745;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.Table-remove-btn{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #dc3545;
+    border-color: #a7685a;
     color: white;
     font-weight: bold;
     font-size: 24px;
