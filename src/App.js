@@ -16,7 +16,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div className="App col">
                 <header className={(this.state.minimized ? "App-header-small" : "App-header ")}>
                     <img src={logo} className={this.state.minimized ? "App-logo-small" : "App-logo"} alt="logo"/>
                     <h1 className="App-title">Mount & Blade Trade Helper</h1>
@@ -27,7 +27,7 @@ class App extends Component {
                 <button className={this.state.minimized ? " App-hidden" : "btn"}
                         onClick={this.minimize}>Get started!
                 </button>
-                {this.state.minimized ? <Table/> : ""}
+                    {this.state.minimized ? <Table/> : ""}
             </div>
         );
     }

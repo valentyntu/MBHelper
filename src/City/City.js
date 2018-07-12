@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
+
 class City extends Component {
-constructor() {
-super();
-}
+    constructor(props) {
+        super(props);
+    }
 
-render() {
-    return (
-        <div>
-        </div>
-    )
-}
+    render() {
+        return (
+            <th>{this.props.cityName}</th>
+        )
+    }
 
-componentDidMount(){
+    componentDidMount() {
 
     }
 }

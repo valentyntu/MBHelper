@@ -1,19 +1,29 @@
 import React, {Component} from 'react';
+import './Product.css'
+
 class Product extends Component {
-constructor() {
-super();
-}
+    constructor(props) {
+        super(props);
+        this.state = {name: ""};
+    }
 
-render() {
-    return (
-        <div>
-        </div>
-    )
-}
+    render() {
+        return (
+            <td className={"Product"}>
+                <div className={"Product-content"}>
+                    <input className={"Product-input"} placeholder={"buy"} type={"text"}/>
+                    /
+                    <input className={"Product-input"} placeholder={"sell"} type={"text"}/>
+                </div>
+            </td>
+        )
+    }
 
-componentDidMount(){
+    componentDidMount() {
 
     }
 }
 
+// value={this.props.buyPrice}
+// value={this.props.sellPrice}
 export default Product;

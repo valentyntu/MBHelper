@@ -1,0 +1,16 @@
+.Product {
+}
+
+.Product-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: stretch;
+}
+
+
+.Product-input {
+    border: none;
+    background-color: transparent;
+    width: 50%;
+}
