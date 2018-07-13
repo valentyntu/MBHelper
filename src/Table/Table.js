@@ -1,21 +1,19 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal'
 import City from "./City/City";
 import Product from "./Product/Product";
 import './Table.css'
 
-const customStyles = {
-    content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
+const modalStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
     }
 };
-
 
 class Table extends Component {
     constructor(props) {
@@ -23,12 +21,21 @@ class Table extends Component {
         this.state = {
             cities: this.defaultCities,
             products: ["Cloth", "Grain", "Iron", "Tools"],
-            productsPrices: [],
-            modalIsOpen: false
+            productsMinBuyPrices: [],
+            productsMaxSellPrices: [],
+            confirmationIsOpened: false,
+            isConfirmingCity: true,
+            valueToDelete: "",
+            modalIsOpen: false,
+            isAddingCity: false,
+            newName: ""
         };
-        this.openModal = this.openModal.bind(this);
+        this.openAddingModal = this.openAddingModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
+        this.closeAddingModal = this.closeAddingModal.bind(this);
+        this.closeConfirmationModal = this.closeConfirmationModal.bind(this);
+        this.openConfirmationModal = this.openConfirmationModal.bind(this);
+        this.afterOpenConfirmation = this.afterOpenConfirmation.bind(this);
     }
 
     defaultCities = [
@@ -61,6 +68,7 @@ class Table extends Component {
         return (
             <div>
                 <table className={"Table table table-bordered table-striped"}>
+
                     <thead>
                     <tr>
                         <th className={"Table-heading"}>#</th>
@@ -69,24 +77,24 @@ class Table extends Component {
                                        key={product}>
                                 <div className={"row justify-content-center align-items-center"}>
                                     <div>{product}</div>
-                                    <button onClick={this.removeProduct.bind(this, product)}
-                                            className={"Table-remove-btn align-self-end mx-3"}>
+                                    <button onClick={this.showRemoveProductConfirmation.bind(this, product)}
+                                            className={"Table-remove-btn ml-2"}>
                                         -
                                     </button>
                                 </div>
                             </th>
                         })}
+
                         <th className={"Table-heading"}>
-                            <button onClick={this.showProductModal}
+                            <button onClick={this.showAddProductModal.bind(this)}
                                     type={"button"}
-                                    className={"Table-add-btn"}
-                                    data-toggle="modal"
-                                    data-target="#exampleModal">
+                                    className={"Table-add-btn"}>
                                 +
                             </button>
                         </th>
                     </tr>
                     </thead>
+
                     <tbody>
                     {this.state.cities.map(city => {
                         return <tr key={city}>
@@ -96,46 +104,93 @@ class Table extends Component {
                             })}
                             <td>
                                 <button className={"Table-remove-btn"}
-                                        onClick={this.removeCity.bind(this, city)}>
+                                        onClick={this.showRemoveCityConfirmation.bind(this, city)}>
                                     -
                                 </button>
                             </td>
                         </tr>
                     })}
+
                     <tr>
                         <th className={"Table-heading"}>
-                            <button onClick={this.openModal}
+                            <button onClick={this.showAddCityModal.bind(this)}
                                     type={"button"}
-                                    className={"Table-add-btn"}
-                                    data-toggle="modal"
-                                    data-target="#exampleModal">
+                                    className={"Table-add-btn"}>
                                 +
                             </button>
                         </th>
                     </tr>
                     </tbody>
+
                 </table>
 
                 <div>
-                    <button onClick={this.openModal}>Open Modal</button>
                     <Modal
                         isOpen={this.state.modalIsOpen}
                         onAfterOpen={this.afterOpenModal}
-                        onRequestClose={this.closeModal}
-                        style={customStyles}
+                        onRequestClose={this.closeAddingModal}
                         contentLabel="Example Modal"
+                        style={modalStyles}
                     >
+                        <div className="modal-header">
+                            <h5 className="modal-title">Add a new
+                                {this.state.isAddingCity
+                                    ? " city"
+                                    : " product"
+                                }.
+                            </h5>
+                            <button type="button" className="close"
+                                    onClick={this.closeAddingModal}
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body row justify-content-around align-items-center">
+                            <label>Name:</label>
+                            <input className={"form-control Table-modal-input"}
+                                   onChange={(ev) => this.setState({newName: ev.target.value})}
+                            />
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-success"
+                                    onClick={this.addNew.bind(this)}>
+                                Add
+                            </button>
+                            <button type="button" className="btn btn-danger"
+                                    onClick={this.closeAddingModal.bind(this)}>
+                                Close
+                            </button>
+                        </div>
+                    </Modal>
 
-                        <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-                        <button onClick={this.closeModal}>close</button>
-                        <div>I am a modal</div>
-                        <form>
-                            <input />
-                            <button>tab navigation</button>
-                            <button>stays</button>
-                            <button>inside</button>
-                            <button>the modal</button>
-                        </form>
+                    <Modal
+                        isOpen={this.state.confirmationIsOpened}
+                        onAfterOpen={this.afterOpenConfirmation}
+                        onRequestClose={this.closeConfirmationModal}
+                        contentLabel="Confirmation"
+                        style={modalStyles}
+                    >
+                        <div className="modal-header">
+                            <h5 className="modal-title">
+                                You are going to delete
+                                {this.state.isConfirmingCity ? " city " : " product "}
+                                "{this.state.valueToDelete}".
+                                Are you sure?
+                            </h5>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-danger"
+                                    onClick={this.state.isConfirmingCity
+                                        ? this.removeCity.bind(this, this.state.valueToDelete)
+                                        : this.removeProduct.bind(this, this.state.valueToDelete)
+                                    }>
+                                Delete
+                            </button>
+                            <button type="button" className="btn btn-success"
+                                    onClick={this.closeConfirmationModal}>
+                                Cancel
+                            </button>
+                        </div>
                     </Modal>
                 </div>
 
@@ -144,12 +199,24 @@ class Table extends Component {
         )
     }
 
+    showRemoveCityConfirmation(city) {
+        this.setState({isConfirmingCity: true});
+        this.openConfirmationModal(city);
+    }
+
+    showRemoveProductConfirmation(product) {
+        this.setState({isConfirmingCity: false});
+        this.openConfirmationModal(product);
+    }
+
     removeCity(cityName) {
         let cities = this.state.cities;
         let index = cities.indexOf(cityName);
         console.log(index);
         cities.splice(index, 1);
         this.setState({cities: cities});
+
+        this.closeConfirmationModal();
     }
 
     removeProduct(productName) {
@@ -158,22 +225,54 @@ class Table extends Component {
         console.log(index);
         cities.splice(index, 1);
         this.setState({products: cities});
+
+        this.closeConfirmationModal();
     }
 
-    openModal() {
+    addNew() {
+        if (this.state.isAddingCity) {
+            this.setState({cities: this.state.cities.concat(this.state.newName)});
+        } else {
+            this.setState({products: this.state.products.concat(this.state.newName)});
+        }
+        this.setState({modalIsOpen: false});
+    }
+
+    openAddingModal() {
         this.setState({modalIsOpen: true});
     }
 
     afterOpenModal() {
-        this.subtitle.style.color = '#f00';
     }
 
-    closeModal() {
+    closeAddingModal() {
         this.setState({modalIsOpen: false});
     }
 
     componentDidMount() {
 
+    }
+
+    showAddProductModal() {
+        this.setState({isAddingCity: false});
+        this.openAddingModal();
+    }
+
+    showAddCityModal() {
+        this.setState({isAddingCity: true});
+        this.openAddingModal();
+    }
+
+    openConfirmationModal(valueToDelete) {
+        this.setState({valueToDelete: valueToDelete});
+        this.setState({confirmationIsOpened: true});
+    }
+
+    closeConfirmationModal() {
+        this.setState({confirmationIsOpened: false});
+    }
+
+    afterOpenConfirmation() {
     }
 }
 

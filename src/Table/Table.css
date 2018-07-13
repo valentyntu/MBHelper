@@ -5,23 +5,27 @@
 }
 
 .Table-add-btn{
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     background-color: #28a745;
     border-color: #28a745;
     color: white;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 12px;
 }
 
 .Table-remove-btn{
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     background-color: #dc3545;
-    border-color: #a7685a;
+    border-color: #a70b0a;
     color: white;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 12px;
+}
+
+.Table-modal-input{
+    width: 70%;
 }
