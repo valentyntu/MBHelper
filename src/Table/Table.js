@@ -30,6 +30,13 @@ class Table extends Component {
             isAddingCity: false,
             newName: ""
         };
+
+        this.state.products.forEach(product => {
+                this.state.productsMaxSellPrices.push({product: product, price: 0});
+                this.state.productsMinBuyPrices.push({product: product, price: Number.MAX_SAFE_INTEGER});
+            }
+        );
+
         this.openAddingModal = this.openAddingModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeAddingModal = this.closeAddingModal.bind(this);
@@ -62,6 +69,12 @@ class Table extends Component {
         "Wercheg",
         "Yalen"
     ];
+
+    handleEnterClick(e){
+        if (e.keyCode === 13) {
+            console.log(e)
+        }
+    }
 
 
     render() {
@@ -100,7 +113,8 @@ class Table extends Component {
                         return <tr key={city}>
                             <City key={city} cityName={city}/>
                             {this.state.products.map((product) => {
-                                return <Product key={city + "-" + product} buyPrice={0} sellPrice={0}/>
+                                return <Product key={city + "-" + product}
+                                                buyPrice={0} sellPrice={0}/>
                             })}
                             <td>
                                 <button className={"Table-remove-btn"}
@@ -183,7 +197,8 @@ class Table extends Component {
                                     onClick={this.state.isConfirmingCity
                                         ? this.removeCity.bind(this, this.state.valueToDelete)
                                         : this.removeProduct.bind(this, this.state.valueToDelete)
-                                    }>
+                                    }
+                            >
                                 Delete
                             </button>
                             <button type="button" className="btn btn-success"
@@ -243,6 +258,7 @@ class Table extends Component {
     }
 
     afterOpenModal() {
+
     }
 
     closeAddingModal() {
@@ -273,6 +289,7 @@ class Table extends Component {
     }
 
     afterOpenConfirmation() {
+
     }
 }
 
