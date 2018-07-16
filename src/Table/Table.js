@@ -346,9 +346,9 @@ class Table extends Component {
                 productsMinBuyPrices: newProductsMinBuyPrices
             }, () => {
                 if (this.checkMaxPrice(product, value)) {
-                    e.target.classList.add("Product-min-price");
+                    e.target.setState({isBuyPriceMin: true});
                 } else {
-                    e.target.classList.remove("Product-min-price");
+                    e.target.setState({isBuyPriceMin: false});
                 }
             });
         }
@@ -370,9 +370,9 @@ class Table extends Component {
                 productsMaxSellPrices: newProductsMaxSellPrices
             }, () => {
                 if (this.checkMaxPrice(product, value)) {
-                    e.target.addProperty("isSellPriceMax", true);
+                    e.target.setState({isSellPriceMax: true});
                 } else {
-                    e.target.addProperty("isSellPriceMax", false);
+                    e.target.setState({isSellPriceMax: false});
                 }
             });
         }

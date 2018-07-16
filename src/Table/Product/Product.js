@@ -4,13 +4,21 @@ import './Product.css'
 
 class Product extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            isBuyPriceMin: props.isBuyPriceMin,
+            isSellPriceMax: props.isSellPriceMax
+        }
+        };
+
     render() {
         return (
             <td className={"Product"}>
                 <div className={"Product-content"}>
                     <input
                         className={"Product-input Product-input-right"
-                        + (this.props.isBuyPriceMin ? " Product-min-price" : "")}
+                        + (this.state.isBuyPriceMin ? " Product-min-price" : "")}
                         placeholder={"buy"}
                         type={"text"}
                         onBlur={this.onBuyPriceChange.bind(this)}
@@ -20,7 +28,7 @@ class Product extends Component {
                     />
                     <div className={"mx-2"}>/</div>
                     <input className={"Product-input Product-input-left"
-                    + (this.props.isSellPriceMax ? " Product-max-price" : "")}
+                    + (this.state.isSellPriceMax ? " Product-max-price" : "")}
                            placeholder={"sell"}
                            type={"text"}
                            onBlur={this.onSellPriceChange.bind(this)}
@@ -47,7 +55,6 @@ class Product extends Component {
         if (e.target.value !== "") {
             this.props.onChange(e, "sell", parseInt(e.target.value, 10));
             e.target = this;
-            console.log(this);
         }
     }
 
