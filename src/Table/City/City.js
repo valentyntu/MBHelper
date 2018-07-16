@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
+import './City.css'
 
 class City extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
-            <th>{this.props.cityName}</th>
+            <th className={"City"}>{this.props.cityName}</th>
         )
     }
 

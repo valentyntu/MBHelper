@@ -1,17 +1,8 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import './Product.css'
 
 class Product extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: "",
-            buyPrice: props.buyPrice,
-            isBuyPriceMin: false,
-            sellPrice: props.sellPrice,
-            isSellPriceMax: false
-        };
-    }
 
     render() {
         return (
@@ -19,33 +10,45 @@ class Product extends Component {
                 <div className={"Product-content"}>
                     <input
                         className={"Product-input Product-input-right"
-                        + this.state.isBuyPriceMin ? " Product-min-price" : ""}
+                        + (this.props.isBuyPriceMin ? " Product-min-price" : "")}
                         placeholder={"buy"}
                         type={"text"}
-                        onChange={this.handleBuyPriceChange.bind(this)}
-                        value={this.state.buyPrice}
+                        onBlur={this.onBuyPriceChange.bind(this)}
+                        onClick={(ev) => ev.target.select()}
+                        // value={this.props.buyPrice}
+                        name={"buyPrice"}
                     />
                     <div className={"mx-2"}>/</div>
-                    <input className={"Product-input Producct-input-left"
-                    // + this.state.isSellPriceMax ? " Product-max-price" : ""
-                    }
-
+                    <input className={"Product-input Product-input-left"
+                    + (this.props.isSellPriceMax ? " Product-max-price" : "")}
                            placeholder={"sell"}
                            type={"text"}
-                           onChange={this.handleSellPriceChange.bind(this)}
-                           value={this.state.sellPrice}
+                           onBlur={this.onSellPriceChange.bind(this)}
+                           onClick={(ev) => ev.target.select()}
+                        // value={this.props.buyPrice}
+                           name={"sellPrice"}
                     />
                 </div>
             </td>
         )
     }
 
-    handleBuyPriceChange(e) {
-        this.setState({buyPrice: e.target.value});
+
+    onBuyPriceChange(e) {
+        e.persist();
+        if (e.target.value !== "") {
+            this.props.onChange(e, "buy", parseInt(e.target.value, 10));
+            e.target = this;
+        }
     }
 
-    handleSellPriceChange(e) {
-        this.setState({sellPrice: e.target.value});
+    onSellPriceChange(e) {
+        e.persist();
+        if (e.target.value !== "") {
+            this.props.onChange(e, "sell", parseInt(e.target.value, 10));
+            e.target = this;
+            console.log(this);
+        }
     }
 
     componentDidMount() {
@@ -54,3 +57,8 @@ class Product extends Component {
 }
 
 export default Product;
+
+Product.propTypes = {
+    isSellPriceMax: PropTypes.bool,
+    isBuyPriceMin: PropTypes.bool
+};

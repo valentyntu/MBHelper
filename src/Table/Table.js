@@ -15,12 +15,43 @@ const modalStyles = {
     }
 };
 
+const defaultCities = [
+    "Ahmerrad",
+    "Bariyye",
+    "Curaw",
+    "Dhirim",
+    "Durquba",
+    "Halmar",
+    "Ichamur",
+    "Jelkala",
+    "Khudan",
+    "Narra",
+    "Praven",
+    "Reyvadin",
+    "Rivacheg",
+    "Sargoth",
+    "Shariz",
+    "Suno",
+    "Tihr",
+    "Tulga",
+    "Uxkhal",
+    "Veluca",
+    "Wercheg",
+    "Yalen"
+];
+
+const defaultProducts = [
+    "Cloth", "Grain", "Iron", "Tools"
+];
+
 class Table extends Component {
+
+
     constructor(props) {
         super(props);
         this.state = {
-            cities: this.defaultCities,
-            products: ["Cloth", "Grain", "Iron", "Tools"],
+            cities: defaultCities,
+            products: defaultProducts,
             productsMinBuyPrices: [],
             productsMaxSellPrices: [],
             confirmationIsOpened: false,
@@ -37,43 +68,15 @@ class Table extends Component {
             }
         );
 
+        console.log(this.state.productsMaxSellPrices);
+        console.log(this.state.productsMinBuyPrices);
+
         this.openAddingModal = this.openAddingModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeAddingModal = this.closeAddingModal.bind(this);
         this.closeConfirmationModal = this.closeConfirmationModal.bind(this);
         this.openConfirmationModal = this.openConfirmationModal.bind(this);
         this.afterOpenConfirmation = this.afterOpenConfirmation.bind(this);
-    }
-
-    defaultCities = [
-        "Ahmerrad",
-        "Bariyye",
-        "Curaw",
-        "Dhirim",
-        "Durquba",
-        "Halmar",
-        "Ichamur",
-        "Jelkala",
-        "Khudan",
-        "Narra",
-        "Praven",
-        "Reyvadin",
-        "Rivacheg",
-        "Sargoth",
-        "Shariz",
-        "Suno",
-        "Tihr",
-        "Tulga",
-        "Uxkhal",
-        "Veluca",
-        "Wercheg",
-        "Yalen"
-    ];
-
-    handleEnterClick(e){
-        if (e.keyCode === 13) {
-            console.log(e)
-        }
     }
 
 
@@ -114,7 +117,9 @@ class Table extends Component {
                             <City key={city} cityName={city}/>
                             {this.state.products.map((product) => {
                                 return <Product key={city + "-" + product}
-                                                buyPrice={0} sellPrice={0}/>
+                                                name={product}
+                                                onChange={this.handlePriceChange.bind(this, product)}
+                                />
                             })}
                             <td>
                                 <button className={"Table-remove-btn"}
@@ -143,7 +148,7 @@ class Table extends Component {
                         isOpen={this.state.modalIsOpen}
                         onAfterOpen={this.afterOpenModal}
                         onRequestClose={this.closeAddingModal}
-                        contentLabel="Example Modal"
+                        contentLabel="Adding modal"
                         style={modalStyles}
                     >
                         <div className="modal-header">
@@ -208,9 +213,7 @@ class Table extends Component {
                         </div>
                     </Modal>
                 </div>
-
             </div>
-
         )
     }
 
@@ -227,7 +230,6 @@ class Table extends Component {
     removeCity(cityName) {
         let cities = this.state.cities;
         let index = cities.indexOf(cityName);
-        console.log(index);
         cities.splice(index, 1);
         this.setState({cities: cities});
 
@@ -237,7 +239,6 @@ class Table extends Component {
     removeProduct(productName) {
         let cities = this.state.products;
         let index = cities.indexOf(productName);
-        console.log(index);
         cities.splice(index, 1);
         this.setState({products: cities});
 
@@ -289,6 +290,92 @@ class Table extends Component {
     }
 
     afterOpenConfirmation() {
+
+    }
+
+    checkMinPrice(product, value) {
+        if (value > 0) {
+            let currentPrice = this.getCurrentMinBuyPrice(product);
+            return value <= currentPrice.price;
+        } else {
+            return false;
+        }
+
+    }
+
+    getCurrentMinBuyPrice(product) {
+        return this.state.productsMinBuyPrices.find(p => p.product === product);
+    }
+
+    checkMaxPrice(product, value) {
+        if (value > 0) {
+            let currentPrice = this.getCurrentMaxSellPrice(product);
+            return value >= currentPrice.price;
+        } else {
+            return false;
+        }
+    }
+
+    getCurrentMaxSellPrice(product) {
+        return this.state.productsMaxSellPrices.find(p => p.product === product);
+    }
+
+    handlePriceChange(product, e, type, value) {
+        console.log("P:" + product + " T:" + type + " V:" + value);
+        if (type === "sell") {
+            this.updateMaxSellPrice(e, product, value);
+        }
+        if (type === "buy") {
+            this.updateMinBuyPrice(e, product, value);
+        }
+    }
+
+    updateMinBuyPrice(e, product, value) {
+        let minBuyPrices = this.state.productsMinBuyPrices;
+        let prevPrice = this.getCurrentMinBuyPrice(product);
+        if (prevPrice.price >= value) {
+            let newProductsMinBuyPrices = [];
+            minBuyPrices.forEach(productPrice => {
+                if (productPrice.product === product) {
+                    newProductsMinBuyPrices.push({product: product, price: value});
+                } else {
+                    newProductsMinBuyPrices.push(productPrice);
+                }
+            });
+            this.setState({
+                productsMinBuyPrices: newProductsMinBuyPrices
+            }, () => {
+                if (this.checkMaxPrice(product, value)) {
+                    e.target.classList.add("Product-min-price");
+                } else {
+                    e.target.classList.remove("Product-min-price");
+                }
+            });
+        }
+    }
+
+    updateMaxSellPrice(e, product, value) {
+        let maxSellPrices = this.state.productsMaxSellPrices;
+        let prevPrice = this.getCurrentMaxSellPrice(product);
+        if (prevPrice.price <= value) {
+            let newProductsMaxSellPrices = [];
+            maxSellPrices.forEach(productPrice => {
+                if (productPrice.product === product) {
+                    newProductsMaxSellPrices.push({product: product, price: value});
+                } else {
+                    newProductsMaxSellPrices.push(productPrice);
+                }
+            });
+            this.setState({
+                productsMaxSellPrices: newProductsMaxSellPrices
+            }, () => {
+                if (this.checkMaxPrice(product, value)) {
+                    e.target.addProperty("isSellPriceMax", true);
+                } else {
+                    e.target.addProperty("isSellPriceMax", false);
+                }
+            });
+        }
 
     }
 }
