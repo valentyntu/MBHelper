@@ -46,7 +46,6 @@ const defaultProducts = [
 
 class Table extends Component {
 
-
     constructor(props) {
         super(props);
         this.state = {
@@ -61,6 +60,7 @@ class Table extends Component {
             isAddingCity: false,
             newName: ""
         };
+        this.table = React.createRef();
 
         this.state.products.forEach(product => {
                 this.state.productsMaxSellPrices.push({product: product, price: 0});
@@ -83,8 +83,7 @@ class Table extends Component {
     render() {
         return (
             <div>
-                <table className={"Table table table-bordered table-striped"}>
-
+                <table ref={this.table} className={"Table table table-bordered table-striped"}>
                     <thead>
                     <tr>
                         <th className={"Table-heading"}>#</th>
@@ -320,17 +319,17 @@ class Table extends Component {
         return this.state.productsMaxSellPrices.find(p => p.product === product);
     }
 
-    handlePriceChange(product, e, type, value) {
+    handlePriceChange(product, type, value) {
         console.log("P:" + product + " T:" + type + " V:" + value);
         if (type === "sell") {
-            this.updateMaxSellPrice(e, product, value);
+            this.updateMaxSellPrice(product, value);
         }
         if (type === "buy") {
-            this.updateMinBuyPrice(e, product, value);
+            this.updateMinBuyPrice(product, value);
         }
     }
 
-    updateMinBuyPrice(e, product, value) {
+    updateMinBuyPrice(product, value) {
         let minBuyPrices = this.state.productsMinBuyPrices;
         let prevPrice = this.getCurrentMinBuyPrice(product);
         if (prevPrice.price >= value) {
@@ -345,16 +344,12 @@ class Table extends Component {
             this.setState({
                 productsMinBuyPrices: newProductsMinBuyPrices
             }, () => {
-                if (this.checkMaxPrice(product, value)) {
-                    e.target.setState({isBuyPriceMin: true});
-                } else {
-                    e.target.setState({isBuyPriceMin: false});
-                }
+                this.updatePricesInColumn(product);
             });
         }
     }
 
-    updateMaxSellPrice(e, product, value) {
+    updateMaxSellPrice(product, value) {
         let maxSellPrices = this.state.productsMaxSellPrices;
         let prevPrice = this.getCurrentMaxSellPrice(product);
         if (prevPrice.price <= value) {
@@ -369,15 +364,32 @@ class Table extends Component {
             this.setState({
                 productsMaxSellPrices: newProductsMaxSellPrices
             }, () => {
-                if (this.checkMaxPrice(product, value)) {
-                    e.target.setState({isSellPriceMax: true});
-                } else {
-                    e.target.setState({isSellPriceMax: false});
-                }
+                this.updatePricesInColumn(product);
             });
         }
 
     }
+
+    updatePricesInColumn(productName) {
+        for (let child in this.props.children) {
+            if (child instanceof Product && child.name === productName) {
+                console.log(productName + " = " + child.name);
+                if (this.checkMaxPrice(child, child.state.value)) {
+                    child.setState({isSellPriceMax: true});
+                } else {
+                    child.setState({isSellPriceMax: false});
+                }
+                if (this.checkMinPrice(child, child.state.value)) {
+                    child.setState({isBuyPriceMin: true});
+                } else {
+                    child.setState({isBuyPriceMin: false});
+                }
+            }
+        }
+    }
+
+
+
 }
 
 export default Table;

@@ -7,34 +7,39 @@ class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            buyPrice: 0,
+            sellPrice: 0,
             isBuyPriceMin: props.isBuyPriceMin,
             isSellPriceMax: props.isSellPriceMax
-        }
         };
+        this.buyPriceInput = React.createRef();
+        this.sellPriceInput = React.createRef();
+    };
 
     render() {
         return (
             <td className={"Product"}>
                 <div className={"Product-content"}>
                     <input
+                        ref={this.buyPriceInput}
                         className={"Product-input Product-input-right"
                         + (this.state.isBuyPriceMin ? " Product-min-price" : "")}
                         placeholder={"buy"}
                         type={"text"}
                         onBlur={this.onBuyPriceChange.bind(this)}
                         onClick={(ev) => ev.target.select()}
-                        // value={this.props.buyPrice}
                         name={"buyPrice"}
                     />
                     <div className={"mx-2"}>/</div>
-                    <input className={"Product-input Product-input-left"
-                    + (this.state.isSellPriceMax ? " Product-max-price" : "")}
-                           placeholder={"sell"}
-                           type={"text"}
-                           onBlur={this.onSellPriceChange.bind(this)}
-                           onClick={(ev) => ev.target.select()}
-                        // value={this.props.buyPrice}
-                           name={"sellPrice"}
+                    <input
+                        ref={this.sellPriceInput}
+                        className={"Product-input Product-input-left"
+                        + (this.state.isSellPriceMax ? " Product-max-price" : "")}
+                        placeholder={"sell"}
+                        type={"text"}
+                        onBlur={this.onSellPriceChange.bind(this)}
+                        onClick={(ev) => ev.target.select()}
+                        name={"sellPrice"}
                     />
                 </div>
             </td>
@@ -43,23 +48,22 @@ class Product extends Component {
 
 
     onBuyPriceChange(e) {
-        e.persist();
-        if (e.target.value !== "") {
-            this.props.onChange(e, "buy", parseInt(e.target.value, 10));
-            e.target = this;
+        let value = e.target.value;
+        if (value !== "") {
+            this.props.onChange("buy", parseInt(value, 10));
+            this.setState({buyPrice: value})
         }
     }
 
     onSellPriceChange(e) {
-        e.persist();
-        if (e.target.value !== "") {
-            this.props.onChange(e, "sell", parseInt(e.target.value, 10));
-            e.target = this;
+        let value = e.target.value;
+        if (value !== "") {
+            this.props.onChange("sell", parseInt(value, 10));
+            this.setState({buyPrice: value})
         }
     }
 
     componentDidMount() {
-
     }
 }
 
