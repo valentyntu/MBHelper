@@ -10,6 +10,7 @@ class App extends Component {
         this.state = {minimized: true};
         this.tableState = [];
         this.fileInput = React.createRef();
+        this.table = React.createRef();
     }
 
     minimize = () => {
@@ -29,8 +30,14 @@ class App extends Component {
                         >Save
                         </button>
                         <button
-                            className={"btn btn-primary App-load-btn" + (!this.state.minimized ? " App-hidden" : "")}>
-                            <input ref={this.fileInput} type={"file"} className={"App-hidden"}/>
+                            className={"btn btn-primary App-load-btn" + (!this.state.minimized ? " App-hidden" : "")}
+                            onClick={this.showFileInputDialog.bind(this)}
+                        >
+                            <input ref={this.fileInput}
+                                   type={"file"}
+                                   className={"App-hidden"}
+                                   onChange={this.load.bind(this)}
+                            />
                             Load
                         </button>
                     </div>
@@ -47,21 +54,32 @@ class App extends Component {
     }
 
     save() {
-        let blob = new Blob([JSON.stringify(this.state.tableState)], {type: 'text/plain'});
+        let blob = new Blob([JSON.stringify(this.state.tableState)], {type: 'application/json'});
         let anchor = document.createElement('a');
 
         anchor.download = "mb_helper.json";
         anchor.href = (window.URL).createObjectURL(blob);
-        anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
+        anchor.dataset.downloadurl = ['application/json', anchor.download, anchor.href].join(':');
         anchor.click();
     }
 
-    showFileInputDialog(){
-
+    showFileInputDialog() {
+        this.fileInput.current.click();
     }
 
-    load(){
+    load() {
+        let files = this.fileInput.current.files;
 
+        if (files.length > 0) {
+            let loadedState = [];
+            let fr = new FileReader();
+            fr.onload = () => {
+                loadedState = JSON.parse(fr.result);
+                this.table.current.setState(loadedState);
+                console.log(loadedState);
+            };
+            fr.readAsText(files[0]);
+        }
     }
 
     updateTableState(state) {
