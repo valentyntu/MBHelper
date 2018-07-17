@@ -1,0 +1,18 @@
+.PresetSelector-select{
+    width: auto;
+}
+
+.PresetSelector-container{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.PresetSelector-label{
+    font-size: x-large;
+    white-space: nowrap;
+    margin-right: 20px;
+    margin-bottom: 0;
+}

@@ -2,15 +2,21 @@ import React, {Component} from 'react';
 import logo from './icon.png';
 import './App.css';
 import Table from "./Table/Table";
+import PresetSelector from "./Table/Presets/PresetSelector";
+import presets from "./Table/Presets/Presets";
 
 class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {minimized: true};
-        this.tableState = [];
-        this.fileInput = React.createRef();
+        this.state = {
+            minimized: true,
+            tablePreset: presets[0],
+            tableState: []
+        };
         this.table = React.createRef();
+        this.fileInput = React.createRef();
+        this.presetSelector = React.createRef();
     }
 
     minimize = () => {
@@ -26,7 +32,7 @@ class App extends Component {
                     <div className={"App-save-load-controls"}>
                         <button
                             className={"btn btn-success App-save-btn" + (!this.state.minimized ? " App-hidden" : "")}
-                            onClick={this.save.bind(this)}
+                            onClick={this.saveToFile.bind(this)}
                         >Save
                         </button>
                         <button
@@ -36,10 +42,11 @@ class App extends Component {
                             <input ref={this.fileInput}
                                    type={"file"}
                                    className={"App-hidden"}
-                                   onChange={this.load.bind(this)}
+                                   onChange={this.loadFromFile.bind(this)}
                             />
                             Load
                         </button>
+                        <PresetSelector ref={this.presetSelector} onChange={this.loadPreset.bind(this)}/>
                     </div>
                 </header>
                 <p className={this.state.minimized ? " App-hidden" : "App-intro"}>
@@ -48,12 +55,13 @@ class App extends Component {
                 <button className={this.state.minimized ? " App-hidden" : "btn"}
                         onClick={this.minimize}>Get started!
                 </button>
-                {this.state.minimized ? <Table ref={this.table} onChange={this.updateTableState.bind(this)}/> : ""}
+                {this.state.minimized ? <Table preset={this.state.tablePreset} ref={this.table}
+                                               onChange={this.updateTableState.bind(this)}/> : ""}
             </div>
         );
     }
 
-    save() {
+    saveToFile() {
         let blob = new Blob([JSON.stringify(this.state.tableState)], {type: 'application/json'});
         let anchor = document.createElement('a');
 
@@ -67,7 +75,7 @@ class App extends Component {
         this.fileInput.current.click();
     }
 
-    load() {
+    loadFromFile() {
         let files = this.fileInput.current.files;
 
         if (files.length > 0) {
@@ -75,8 +83,7 @@ class App extends Component {
             let fr = new FileReader();
             fr.onload = () => {
                 loadedState = JSON.parse(fr.result);
-                this.table.current.setState(loadedState);
-                console.log(loadedState);
+                this.loadPreset(loadedState);
             };
             fr.readAsText(files[0]);
         }
@@ -84,6 +91,10 @@ class App extends Component {
 
     updateTableState(state) {
         this.setState({tableState: state})
+    }
+
+    loadPreset(preset) {
+        this.table.current.setState(preset);
     }
 
 }

@@ -5,46 +5,16 @@ import './Table.css'
 import AddingModal from "./Modal/AddingModal";
 import ConfirmationModal from "./Modal/ConfirmationModal";
 
-const defaultCities = [
-    "Ahmerrad",
-    "Bariyye",
-    "Curaw",
-    "Dhirim",
-    "Durquba",
-    "Halmar",
-    "Ichamur",
-    "Jelkala",
-    "Khudan",
-    "Narra",
-    "Praven",
-    "Reyvadin",
-    "Rivacheg",
-    "Sargoth",
-    "Shariz",
-    "Suno",
-    "Tihr",
-    "Tulga",
-    "Uxkhal",
-    "Veluca",
-    "Wercheg",
-    "Yalen"
-];
-
-const defaultProducts = [
-    "Cloth", "Grain", "Iron", "Tools"
-];
-
 class Table extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            cities: defaultCities,
-            products: defaultProducts,
+            cities: props.preset.cities,
+            products: props.preset.products,
             prices: []
         };
 
-        this.table = React.createRef();
         this.addingModal = React.createRef();
         this.confirmationModal = React.createRef();
 
@@ -56,11 +26,10 @@ class Table extends Component {
         );
     }
 
-
     render() {
         return (
             <div>
-                <table ref={this.table} className={"Table table table-bordered table-striped"}>
+                <table className={"Table table table-bordered table-striped"}>
                     <thead>
                     <tr>
                         <th className={"Table-heading"}>#</th>
@@ -151,6 +120,7 @@ class Table extends Component {
         if (type === "product") {
             this.removeProduct(value);
         }
+        this.removeRelatedPriceEntries(value);
     }
 
     removeCity(cityName) {
@@ -167,13 +137,41 @@ class Table extends Component {
         this.setState({products: cities});
     }
 
+    removeRelatedPriceEntries(cityOrProduct) {
+        let newPrices = [];
+        this.state.prices.forEach(price => {
+            if (!price.key.includes(cityOrProduct)) {
+                newPrices.push(price);
+            }
+        });
+        this.setState({prices: newPrices})
+    }
+
     addNew(type, value) {
         if (type === "city") {
             this.setState({cities: this.state.cities.concat(value)});
+            this.addNewPriceEntriesForCity(value);
         }
         if (type === "product") {
             this.setState({products: this.state.products.concat(value)});
+            this.addNewPriceEntriesForProduct(value);
         }
+    }
+
+    addNewPriceEntriesForProduct(product){
+        let newPrices = [];
+        this.state.cities.forEach(city => {
+            newPrices.push({key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0});
+        });
+        this.setState({prices: this.state.prices.concat(newPrices)})
+    }
+
+    addNewPriceEntriesForCity(city){
+        let newPrices = [];
+        this.state.products.forEach(product => {
+            newPrices.push({key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0});
+        });
+        this.setState({prices: this.state.prices.concat(newPrices)})
     }
 
     componentDidMount() {
@@ -188,7 +186,7 @@ class Table extends Component {
     }
 
     showAddCityModal() {
-        this.confirmationModal.current.setState({
+        this.addingModal.current.setState({
             isAddingCity: true,
             isOpen: true
         });
