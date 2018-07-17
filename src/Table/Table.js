@@ -177,7 +177,7 @@ class Table extends Component {
     }
 
     componentDidMount() {
-
+        this.pushState();
     }
 
     showAddProductModal() {
@@ -254,6 +254,14 @@ class Table extends Component {
             }
         });
         this.setState({prices: newPrices});
+    }
+
+    setState(partialUpdate) {
+        super.setState(partialUpdate, () => this.pushState())
+    }
+
+    pushState() {
+        this.props.onChange(this.state);
     }
 }
 

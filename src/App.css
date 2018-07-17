@@ -15,7 +15,9 @@
 .App-header-small {
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
+    justify-content: left;
     background-color: #222;
     height: 10vh;
     color: white;
@@ -24,7 +26,7 @@
 .App-header {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background-color: #222;
     height: 35vh;
@@ -32,7 +34,7 @@
 }
 
 .App-title {
-    padding-left: 15px;
+    margin-left: 15px;
 }
 
 .App-intro {
@@ -41,4 +43,20 @@
 
 .App-hidden {
     display: none;
+}
+
+.App-save-load-controls{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-left: 15px;
+}
+
+.App-save-btn{
+    margin-right: 15%;
+    font-size: x-large;
+}
+
+.App-load-btn{
+    font-size: x-large;
 }
