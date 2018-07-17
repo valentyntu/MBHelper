@@ -4,42 +4,28 @@ import './Product.css'
 
 class Product extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            buyPrice: 0,
-            sellPrice: 0,
-            isBuyPriceMin: props.isBuyPriceMin,
-            isSellPriceMax: props.isSellPriceMax
-        };
-        this.buyPriceInput = React.createRef();
-        this.sellPriceInput = React.createRef();
-    };
-
     render() {
         return (
             <td className={"Product"}>
                 <div className={"Product-content"}>
                     <input
-                        ref={this.buyPriceInput}
                         className={"Product-input Product-input-right"
-                        + (this.state.isBuyPriceMin ? " Product-min-price" : "")}
+                        + (this.props.isBuyPriceMin ? " Product-min-price" : "")}
                         placeholder={"buy"}
                         type={"text"}
                         onBlur={this.onBuyPriceChange.bind(this)}
                         onClick={(ev) => ev.target.select()}
-                        name={"buyPrice"}
+                        defaultValue={this.props.buyPrice === Number.MAX_SAFE_INTEGER ? "" : this.props.buyPrice}
                     />
-                    <div className={"mx-2"}>/</div>
+                    <div className={"Product-value-separator"}>/</div>
                     <input
-                        ref={this.sellPriceInput}
                         className={"Product-input Product-input-left"
-                        + (this.state.isSellPriceMax ? " Product-max-price" : "")}
+                        + (this.props.isSellPriceMax ? " Product-max-price" : "")}
                         placeholder={"sell"}
                         type={"text"}
                         onBlur={this.onSellPriceChange.bind(this)}
                         onClick={(ev) => ev.target.select()}
-                        name={"sellPrice"}
+                        defaultValue={this.props.sellPrice === 0 ? "" : this.props.sellPrice}
                     />
                 </div>
             </td>
@@ -51,7 +37,6 @@ class Product extends Component {
         let value = e.target.value;
         if (value !== "") {
             this.props.onChange("buy", parseInt(value, 10));
-            this.setState({buyPrice: value})
         }
     }
 
@@ -59,11 +44,11 @@ class Product extends Component {
         let value = e.target.value;
         if (value !== "") {
             this.props.onChange("sell", parseInt(value, 10));
-            this.setState({buyPrice: value})
         }
     }
 
     componentDidMount() {
+
     }
 }
 

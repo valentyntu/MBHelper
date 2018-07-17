@@ -1,19 +1,9 @@
 import React, {Component} from 'react';
-import Modal from 'react-modal'
 import City from "./City/City";
 import Product from "./Product/Product";
 import './Table.css'
-
-const modalStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
-    }
-};
+import AddingModal from "./Modal/AddingModal";
+import ConfirmationModal from "./Modal/ConfirmationModal";
 
 const defaultCities = [
     "Ahmerrad",
@@ -51,32 +41,19 @@ class Table extends Component {
         this.state = {
             cities: defaultCities,
             products: defaultProducts,
-            productsMinBuyPrices: [],
-            productsMaxSellPrices: [],
-            confirmationIsOpened: false,
-            isConfirmingCity: true,
-            valueToDelete: "",
-            modalIsOpen: false,
-            isAddingCity: false,
-            newName: ""
+            prices: []
         };
+
         this.table = React.createRef();
+        this.addingModal = React.createRef();
+        this.confirmationModal = React.createRef();
 
         this.state.products.forEach(product => {
-                this.state.productsMaxSellPrices.push({product: product, price: 0});
-                this.state.productsMinBuyPrices.push({product: product, price: Number.MAX_SAFE_INTEGER});
+                this.state.cities.forEach(city => this.state.prices.push(
+                    {key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0})
+                );
             }
         );
-
-        console.log(this.state.productsMaxSellPrices);
-        console.log(this.state.productsMinBuyPrices);
-
-        this.openAddingModal = this.openAddingModal.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
-        this.closeAddingModal = this.closeAddingModal.bind(this);
-        this.closeConfirmationModal = this.closeConfirmationModal.bind(this);
-        this.openConfirmationModal = this.openConfirmationModal.bind(this);
-        this.afterOpenConfirmation = this.afterOpenConfirmation.bind(this);
     }
 
 
@@ -116,8 +93,11 @@ class Table extends Component {
                             <City key={city} cityName={city}/>
                             {this.state.products.map((product) => {
                                 return <Product key={city + "-" + product}
-                                                name={product}
-                                                onChange={this.handlePriceChange.bind(this, product)}
+                                                onChange={this.handlePriceChange.bind(this, city, product)}
+                                                isBuyPriceMin={this.checkMinPrice(product, this.getCurrentPrice(city, product, "buy"))}
+                                                isSellPriceMax={this.checkMaxPrice(product, this.getCurrentPrice(city, product, "sell"))}
+                                                buyPrice={this.getCurrentPrice(city, product, "buy")}
+                                                sellPrice={this.getCurrentPrice(city, product, "sell")}
                                 />
                             })}
                             <td>
@@ -142,88 +122,35 @@ class Table extends Component {
 
                 </table>
 
-                <div>
-                    <Modal
-                        isOpen={this.state.modalIsOpen}
-                        onAfterOpen={this.afterOpenModal}
-                        onRequestClose={this.closeAddingModal}
-                        contentLabel="Adding modal"
-                        style={modalStyles}
-                    >
-                        <div className="modal-header">
-                            <h5 className="modal-title">Add a new
-                                {this.state.isAddingCity
-                                    ? " city"
-                                    : " product"
-                                }.
-                            </h5>
-                            <button type="button" className="close"
-                                    onClick={this.closeAddingModal}
-                                    aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body row justify-content-around align-items-center">
-                            <label>Name:</label>
-                            <input className={"form-control Table-modal-input"}
-                                   onChange={(ev) => this.setState({newName: ev.target.value})}
-                            />
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-success"
-                                    onClick={this.addNew.bind(this)}>
-                                Add
-                            </button>
-                            <button type="button" className="btn btn-danger"
-                                    onClick={this.closeAddingModal.bind(this)}>
-                                Close
-                            </button>
-                        </div>
-                    </Modal>
-
-                    <Modal
-                        isOpen={this.state.confirmationIsOpened}
-                        onAfterOpen={this.afterOpenConfirmation}
-                        onRequestClose={this.closeConfirmationModal}
-                        contentLabel="Confirmation"
-                        style={modalStyles}
-                    >
-                        <div className="modal-header">
-                            <h5 className="modal-title">
-                                You are going to delete
-                                {this.state.isConfirmingCity ? " city " : " product "}
-                                "{this.state.valueToDelete}".
-                                Are you sure?
-                            </h5>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-danger"
-                                    onClick={this.state.isConfirmingCity
-                                        ? this.removeCity.bind(this, this.state.valueToDelete)
-                                        : this.removeProduct.bind(this, this.state.valueToDelete)
-                                    }
-                            >
-                                Delete
-                            </button>
-                            <button type="button" className="btn btn-success"
-                                    onClick={this.closeConfirmationModal}>
-                                Cancel
-                            </button>
-                        </div>
-                    </Modal>
-                </div>
+                <AddingModal ref={this.addingModal} onChange={this.addNew.bind(this)}/>
+                <ConfirmationModal ref={this.confirmationModal} onChange={this.remove.bind(this)}/>
             </div>
         )
     }
 
     showRemoveCityConfirmation(city) {
-        this.setState({isConfirmingCity: true});
-        this.openConfirmationModal(city);
+        this.confirmationModal.current.setState({
+            isOpen: true,
+            isRemovingCity: true,
+            valueToDelete: city
+        });
     }
 
     showRemoveProductConfirmation(product) {
-        this.setState({isConfirmingCity: false});
-        this.openConfirmationModal(product);
+        this.confirmationModal.current.setState({
+            isOpen: true,
+            isRemovingCity: false,
+            valueToDelete: product
+        });
+    }
+
+    remove(type, value) {
+        if (type === "city") {
+            this.removeCity(value);
+        }
+        if (type === "product") {
+            this.removeProduct(value);
+        }
     }
 
     removeCity(cityName) {
@@ -231,8 +158,6 @@ class Table extends Component {
         let index = cities.indexOf(cityName);
         cities.splice(index, 1);
         this.setState({cities: cities});
-
-        this.closeConfirmationModal();
     }
 
     removeProduct(productName) {
@@ -240,29 +165,15 @@ class Table extends Component {
         let index = cities.indexOf(productName);
         cities.splice(index, 1);
         this.setState({products: cities});
-
-        this.closeConfirmationModal();
     }
 
-    addNew() {
-        if (this.state.isAddingCity) {
-            this.setState({cities: this.state.cities.concat(this.state.newName)});
-        } else {
-            this.setState({products: this.state.products.concat(this.state.newName)});
+    addNew(type, value) {
+        if (type === "city") {
+            this.setState({cities: this.state.cities.concat(value)});
         }
-        this.setState({modalIsOpen: false});
-    }
-
-    openAddingModal() {
-        this.setState({modalIsOpen: true});
-    }
-
-    afterOpenModal() {
-
-    }
-
-    closeAddingModal() {
-        this.setState({modalIsOpen: false});
+        if (type === "product") {
+            this.setState({products: this.state.products.concat(value)});
+        }
     }
 
     componentDidMount() {
@@ -270,126 +181,80 @@ class Table extends Component {
     }
 
     showAddProductModal() {
-        this.setState({isAddingCity: false});
-        this.openAddingModal();
+        this.addingModal.current.setState({
+            isAddingCity: false,
+            isOpen: true
+        });
     }
 
     showAddCityModal() {
-        this.setState({isAddingCity: true});
-        this.openAddingModal();
-    }
-
-    openConfirmationModal(valueToDelete) {
-        this.setState({valueToDelete: valueToDelete});
-        this.setState({confirmationIsOpened: true});
-    }
-
-    closeConfirmationModal() {
-        this.setState({confirmationIsOpened: false});
-    }
-
-    afterOpenConfirmation() {
-
+        this.confirmationModal.current.setState({
+            isAddingCity: true,
+            isOpen: true
+        });
     }
 
     checkMinPrice(product, value) {
-        if (value > 0) {
-            let currentPrice = this.getCurrentMinBuyPrice(product);
-            return value <= currentPrice.price;
+        if (value < Number.MAX_SAFE_INTEGER) {
+            let prices = this.state.prices.filter(price => price.key.includes(product));
+            let minPrice = Number.MAX_SAFE_INTEGER;
+            prices.forEach(price => {
+                if (minPrice > price.buy) {
+                    minPrice = price.buy;
+                }
+            });
+            return value === minPrice;
         } else {
             return false;
         }
-
-    }
-
-    getCurrentMinBuyPrice(product) {
-        return this.state.productsMinBuyPrices.find(p => p.product === product);
     }
 
     checkMaxPrice(product, value) {
         if (value > 0) {
-            let currentPrice = this.getCurrentMaxSellPrice(product);
-            return value >= currentPrice.price;
+            let prices = this.state.prices.filter(price => price.key.includes(product));
+            let maxPrice = 0;
+            prices.forEach(price => {
+                if (maxPrice < price.sell) {
+                    maxPrice = price.sell;
+                }
+            });
+            return value === maxPrice;
         } else {
             return false;
         }
     }
 
-    getCurrentMaxSellPrice(product) {
-        return this.state.productsMaxSellPrices.find(p => p.product === product);
-    }
-
-    handlePriceChange(product, type, value) {
-        console.log("P:" + product + " T:" + type + " V:" + value);
-        if (type === "sell") {
-            this.updateMaxSellPrice(product, value);
-        }
-        if (type === "buy") {
-            this.updateMinBuyPrice(product, value);
-        }
-    }
-
-    updateMinBuyPrice(product, value) {
-        let minBuyPrices = this.state.productsMinBuyPrices;
-        let prevPrice = this.getCurrentMinBuyPrice(product);
-        if (prevPrice.price >= value) {
-            let newProductsMinBuyPrices = [];
-            minBuyPrices.forEach(productPrice => {
-                if (productPrice.product === product) {
-                    newProductsMinBuyPrices.push({product: product, price: value});
-                } else {
-                    newProductsMinBuyPrices.push(productPrice);
-                }
-            });
-            this.setState({
-                productsMinBuyPrices: newProductsMinBuyPrices
-            }, () => {
-                this.updatePricesInColumn(product);
-            });
-        }
-    }
-
-    updateMaxSellPrice(product, value) {
-        let maxSellPrices = this.state.productsMaxSellPrices;
-        let prevPrice = this.getCurrentMaxSellPrice(product);
-        if (prevPrice.price <= value) {
-            let newProductsMaxSellPrices = [];
-            maxSellPrices.forEach(productPrice => {
-                if (productPrice.product === product) {
-                    newProductsMaxSellPrices.push({product: product, price: value});
-                } else {
-                    newProductsMaxSellPrices.push(productPrice);
-                }
-            });
-            this.setState({
-                productsMaxSellPrices: newProductsMaxSellPrices
-            }, () => {
-                this.updatePricesInColumn(product);
-            });
-        }
-
-    }
-
-    updatePricesInColumn(productName) {
-        for (let child in this.props.children) {
-            if (child instanceof Product && child.name === productName) {
-                console.log(productName + " = " + child.name);
-                if (this.checkMaxPrice(child, child.state.value)) {
-                    child.setState({isSellPriceMax: true});
-                } else {
-                    child.setState({isSellPriceMax: false});
-                }
-                if (this.checkMinPrice(child, child.state.value)) {
-                    child.setState({isBuyPriceMin: true});
-                } else {
-                    child.setState({isBuyPriceMin: false});
-                }
+    getCurrentPrice(city, product, type) {
+        let price = this.state.prices.find(item => item.key === city + "-" + product);
+        if (price !== undefined) {
+            if (type === "buy") {
+                return price.buy;
+            }
+            if (type === "sell") {
+                return price.sell;
             }
         }
+        return 0;
     }
 
-
-
+    handlePriceChange(city, product, type, value) {
+        let newPrice = this.state.prices.find(item => item.key === city + "-" + product);
+        if (type === "sell") {
+            newPrice.sell = value;
+        }
+        if (type === "buy") {
+            newPrice.buy = value;
+        }
+        let newPrices = [];
+        this.state.prices.forEach(oldPrice => {
+            if (newPrice.key === oldPrice.key) {
+                newPrices.push(newPrice)
+            } else {
+                newPrices.push(oldPrice)
+            }
+        });
+        this.setState({prices: newPrices});
+    }
 }
 
 export default Table;

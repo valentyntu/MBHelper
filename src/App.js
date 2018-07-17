@@ -7,7 +7,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {minimized: true};
+        this.state = {minimized: false};
     }
 
     minimize = () => {
