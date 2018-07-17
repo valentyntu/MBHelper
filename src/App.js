@@ -46,7 +46,7 @@ class App extends Component {
                             />
                             Load
                         </button>
-                        <PresetSelector ref={this.presetSelector} onChange={this.loadPreset.bind(this)}/>
+                        <PresetSelector ref={this.presetSelector} onChange={this.loadPreset.bind(this, true)}/>
                     </div>
                 </header>
                 <p className={this.state.minimized ? " App-hidden" : "App-intro"}>
@@ -83,7 +83,7 @@ class App extends Component {
             let fr = new FileReader();
             fr.onload = () => {
                 loadedState = JSON.parse(fr.result);
-                this.loadPreset(loadedState);
+                this.loadPreset(loadedState, false);
             };
             fr.readAsText(files[0]);
         }
@@ -93,8 +93,16 @@ class App extends Component {
         this.setState({tableState: state})
     }
 
-    loadPreset(preset) {
-        this.table.current.setState(preset);
+    loadPreset(preset, isLoadedFromPreset) {
+        //FIXME
+        let stateFromPreset = Object.assign({}, preset);
+        if (isLoadedFromPreset) {
+            stateFromPreset.isLoadedFromPreset = true;
+        } else {
+            stateFromPreset.isLoadedFromPreset = false;
+        }
+        this.table.current.setState(stateFromPreset);
+
     }
 
 }

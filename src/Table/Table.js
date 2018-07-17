@@ -10,6 +10,7 @@ class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoadedFromPreset: false,
             cities: props.preset.cities,
             products: props.preset.products,
             prices: []
@@ -158,7 +159,7 @@ class Table extends Component {
         }
     }
 
-    addNewPriceEntriesForProduct(product){
+    addNewPriceEntriesForProduct(product) {
         let newPrices = [];
         this.state.cities.forEach(city => {
             newPrices.push({key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0});
@@ -166,7 +167,7 @@ class Table extends Component {
         this.setState({prices: this.state.prices.concat(newPrices)})
     }
 
-    addNewPriceEntriesForCity(city){
+    addNewPriceEntriesForCity(city) {
         let newPrices = [];
         this.state.products.forEach(product => {
             newPrices.push({key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0});
@@ -255,7 +256,21 @@ class Table extends Component {
     }
 
     setState(partialUpdate) {
-        super.setState(partialUpdate, () => this.pushState())
+        super.setState(partialUpdate, () => {
+                if (this.state.isLoadedFromPreset) {
+                    let newPrices = [];
+                    this.state.products.forEach(product => {
+                            this.state.cities.forEach(city => newPrices.push(
+                                {key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0})
+                            );
+                        }
+                    );
+                    this.setState({isLoadedFromPreset: false, prices: newPrices})
+                } else {
+                    this.pushState()
+                }
+            }
+        )
     }
 
     pushState() {
