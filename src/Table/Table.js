@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import City from "./City/City";
-import Product from "./Product/Product";
+import Prices from "./Prices/Prices";
 import './Table.css'
 import AddingModal from "./Modal/AddingModal";
 import ConfirmationModal from "./Modal/ConfirmationModal";
+import Product from "./Product/Product";
 
 class Table extends Component {
 
@@ -34,16 +35,7 @@ class Table extends Component {
                     <tr>
                         <th className={"Table-heading"}>#</th>
                         {this.state.products.map(product => {
-                            return <th className={"Table-heading"}
-                                       key={product}>
-                                <div className={"row justify-content-center align-items-center"}>
-                                    <div>{product}</div>
-                                    <button onClick={this.showRemoveProductConfirmation.bind(this, product)}
-                                            className={"Table-remove-btn ml-2"}>
-                                        -
-                                    </button>
-                                </div>
-                            </th>
+                            return <Product key={product} productName={product} onChange={this.showRemoveProductConfirmation.bind(this)}/>
                         })}
 
                         <th className={"Table-heading"}>
@@ -61,12 +53,12 @@ class Table extends Component {
                         return <tr key={city}>
                             <City key={city} cityName={city}/>
                             {this.state.products.map((product) => {
-                                return <Product key={city + "-" + product}
-                                                onChange={this.handlePriceChange.bind(this, city, product)}
-                                                isBuyPriceMin={this.checkMinPrice(product, this.getCurrentPrice(city, product, "buy"))}
-                                                isSellPriceMax={this.checkMaxPrice(product, this.getCurrentPrice(city, product, "sell"))}
-                                                buyPrice={this.getCurrentPrice(city, product, "buy")}
-                                                sellPrice={this.getCurrentPrice(city, product, "sell")}
+                                return <Prices key={city + "-" + product}
+                                               onChange={this.handlePriceChange.bind(this, city, product)}
+                                               isBuyPriceMin={this.checkMinPrice(product, this.getCurrentPrice(city, product, "buy"))}
+                                               isSellPriceMax={this.checkMaxPrice(product, this.getCurrentPrice(city, product, "sell"))}
+                                               buyPrice={this.getCurrentPrice(city, product, "buy")}
+                                               sellPrice={this.getCurrentPrice(city, product, "sell")}
                                 />
                             })}
                             <td>

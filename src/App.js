@@ -29,28 +29,30 @@ class App extends Component {
                 <header className={(this.state.minimized ? "App-header-small" : "App-header ")}>
                     <img src={logo} className={this.state.minimized ? "App-logo-small" : " App-logo"} alt="logo"/>
                     <h1 className="App-title">Mount & Blade Trade Helper</h1>
-                    <div className={"App-save-load-controls"}>
-                        <button
-                            className={"btn btn-success App-save-btn" + (!this.state.minimized ? " App-hidden" : "")}
-                            onClick={this.saveToFile.bind(this)}
-                        >Save
-                        </button>
-                        <button
-                            className={"btn btn-primary App-load-btn" + (!this.state.minimized ? " App-hidden" : "")}
-                            onClick={this.showFileInputDialog.bind(this)}
-                        >
-                            <input ref={this.fileInput}
-                                   type={"file"}
-                                   className={"App-hidden"}
-                                   onChange={this.loadFromFile.bind(this)}
-                            />
-                            Load
-                        </button>
+                    <div className={"App-controls-container"}>
                         <PresetSelector ref={this.presetSelector} onChange={this.loadPreset.bind(this, true)}/>
+                        <div className={"App-save-load-controls"}>
+                            <button
+                                className={"btn btn-success App-save-btn" + (!this.state.minimized ? " App-hidden" : "")}
+                                onClick={this.saveToFile.bind(this)}
+                            >Save
+                            </button>
+                            <button
+                                className={"btn btn-primary App-load-btn" + (!this.state.minimized ? " App-hidden" : "")}
+                                onClick={this.showFileInputDialog.bind(this)}
+                            >
+                                <input ref={this.fileInput}
+                                       type={"file"}
+                                       className={"App-hidden"}
+                                       onChange={this.loadFromFile.bind(this)}
+                                />
+                                Load
+                            </button>
+                        </div>
                     </div>
                 </header>
                 <p className={this.state.minimized ? " App-hidden" : "App-intro"}>
-                    This application is designed to help with trade when playing Mount & Blade: Warband.
+                    This application is designed to help with trade when playing Mount & Blade.
                 </p>
                 <button className={this.state.minimized ? " App-hidden" : "btn"}
                         onClick={this.minimize}>Get started!

@@ -12,10 +12,8 @@ class PresetSelector extends Component {
     render() {
         return (
             <div className={"PresetSelector-container"}>
-                <label className={"PresetSelector-label"}>Select Preset:</label>
                 <select ref={this.select} onChange={this.handlePresetChange.bind(this)}
-                        className={"custom-select custom-select-lg PresetSelector-select"}
-                >
+                        className={"custom-select custom-select-lg PresetSelector-select"}>
                     {presets.map(item => {
                         return <option key={presets.indexOf(item)} value={presets.indexOf(item)}>{item.name}</option>
                     })}

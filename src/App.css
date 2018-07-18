@@ -46,18 +46,21 @@
     display: none;
 }
 
-.App-save-load-controls{
+.App-save-load-controls {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
     margin-left: 15px;
 }
 
-.App-save-btn{
+.App-save-btn {
     margin-right: 5%;
     font-size: x-large;
 }
 
-.App-load-btn{
+.App-load-btn {
     font-size: x-large;
+}
+
+.App-controls-container {
+    display: flex;
 }
