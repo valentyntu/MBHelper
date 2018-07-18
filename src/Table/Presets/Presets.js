@@ -27,14 +27,38 @@ const presets = [
         ],
         products: [
             "Cloth", "Grain", "Iron", "Tools"
+        ]
+    },
+    {
+        name: "With Fire & Sword",
+        cities: [
+            "Akkerman",
+            "Azaq-kale",
+            "Bakhchisaray",
+            "Cherkassk",
+            "Chernigov",
+            "Kiev",
+            "Koenigsberg",
+            "Krakov",
+            "Kyzykermen",
+            "Lviv",
+            "Moscow",
+            "Pskov",
+            "Reval",
+            "Riga",
+            "Sich",
+            "Smolensk",
+            "Vilna",
+            "Warsaw"
         ],
-        prices: []
+        products: [
+            "Gunpowder", "Velvet", "Spice", "Raw Silk"
+        ]
     },
     {
         name: "Empty",
         cities: [],
-        products: [],
-        prices: []
+        products: []
     },
 ];
 

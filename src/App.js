@@ -55,8 +55,10 @@ class App extends Component {
                 <button className={this.state.minimized ? " App-hidden" : "btn"}
                         onClick={this.minimize}>Get started!
                 </button>
-                {this.state.minimized ? <Table preset={this.state.tablePreset} ref={this.table}
-                                               onChange={this.updateTableState.bind(this)}/> : ""}
+                {this.state.minimized ? <Table
+                    preset={this.state.tablePreset}
+                    ref={this.table}
+                    onChange={this.updateTableState.bind(this)}/> : ""}
             </div>
         );
     }
@@ -83,7 +85,7 @@ class App extends Component {
             let fr = new FileReader();
             fr.onload = () => {
                 loadedState = JSON.parse(fr.result);
-                this.loadPreset(loadedState, false);
+                this.loadPreset(false, loadedState);
             };
             fr.readAsText(files[0]);
         }
@@ -93,19 +95,21 @@ class App extends Component {
         this.setState({tableState: state})
     }
 
-    loadPreset(preset, isLoadedFromPreset) {
-        //FIXME
-        let stateFromPreset = Object.assign({}, preset);
+    loadPreset(isLoadedFromPreset, preset) {
+        let stateFromPreset = {...preset};
         if (isLoadedFromPreset) {
-            stateFromPreset.isLoadedFromPreset = true;
-        } else {
-            stateFromPreset.isLoadedFromPreset = false;
+            let newPrices = [];
+            stateFromPreset.products.forEach(product => {
+                    stateFromPreset.cities.forEach(city => newPrices.push(
+                        {key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0})
+                    );
+                }
+            );
+            stateFromPreset.prices = newPrices;
         }
         this.table.current.setState(stateFromPreset);
-
     }
 
 }
-
 
 export default App;
