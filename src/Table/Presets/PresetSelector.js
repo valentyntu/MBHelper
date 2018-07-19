@@ -32,6 +32,10 @@ class PresetSelector extends Component {
     }
 
     componentDidMount() {
+
+    }
+
+    componentWillMount(){
         this.loadPresets().then(presets => this.setState({presets: presets}));
     }
 

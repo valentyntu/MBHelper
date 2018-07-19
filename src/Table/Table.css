@@ -13,6 +13,7 @@
     color: white;
     font-weight: bold;
     font-size: 12px;
+    cursor: pointer;
 }
 
 .Table-remove-btn{
@@ -24,6 +25,7 @@
     color: white;
     font-weight: bold;
     font-size: 12px;
+    cursor: pointer;
 }
 
 .Table-modal-input{
