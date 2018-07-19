@@ -17,6 +17,7 @@ class App extends Component {
         this.table = React.createRef();
         this.fileInput = React.createRef();
         this.presetSelector = React.createRef();
+        this.fileInputForm = React.createRef();
     }
 
     minimize = () => {
@@ -26,30 +27,55 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <header className={(this.state.minimized ? "App-header-small" : "App-header ")}>
-                    <img src={logo} className={this.state.minimized ? "App-logo-small" : " App-logo"} alt="logo"/>
-                    <h1 className="App-title">Mount & Blade Trade Helper</h1>
-                    <div className={"App-controls-container"}>
-                        <PresetSelector ref={this.presetSelector} onChange={this.loadPreset.bind(this, true)}/>
-                        <div className={"App-save-load-controls"}>
+                <nav
+                    className={"navbar navbar-dark bg-dark navbar-expand-lg" + (!this.state.minimized ? " App-hidden" : "")}>
+                    <a className="navbar-brand" href="/">
+                        <img src={logo}
+                             className="d-inline-block align-top App-logo-small" alt=""/>
+                    </a>
+                    <span className={"navbar-brand"}>Mount & Blade Trade Helper</span>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"/>
+                    </button>
+
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item">
+
+                            </li>
+                            <li className="nav-item">
+
+                            </li>
+
+                        </ul>
+                        <div className={"App-controls-container"}>
+                            <PresetSelector ref={this.presetSelector} onChange={this.load.bind(this)}/>
                             <button
-                                className={"btn btn-success App-save-btn" + (!this.state.minimized ? " App-hidden" : "")}
+                                className={"btn btn-success App-save-btn"}
                                 onClick={this.saveToFile.bind(this)}
                             >Save
                             </button>
                             <button
-                                className={"btn btn-primary App-load-btn" + (!this.state.minimized ? " App-hidden" : "")}
-                                onClick={this.showFileInputDialog.bind(this)}
-                            >
+                                className={"btn btn-primary App-load-btn"}
+                                onClick={this.showFileInputDialog.bind(this)}>
+                                <form className={"App-hidden"} ref={this.fileInputForm}>
                                 <input ref={this.fileInput}
                                        type={"file"}
-                                       className={"App-hidden"}
+                                       accept={".json"}
                                        onChange={this.loadFromFile.bind(this)}
                                 />
+                                </form>
                                 Load
                             </button>
                         </div>
                     </div>
+                </nav>
+
+                <header className={(this.state.minimized ? "App-hidden" : "App-header ")}>
+                    <img src={logo} className={"App-logo"} alt="logo"/>
+                    <h1 className="App-title">Mount & Blade Trade Helper</h1>
                 </header>
                 <p className={this.state.minimized ? " App-hidden" : "App-intro"}>
                     This application is designed to help with trade when playing Mount & Blade.
@@ -80,16 +106,16 @@ class App extends Component {
     }
 
     loadFromFile() {
-        let files = this.fileInput.current.files;
-
-        if (files.length > 0) {
+        let file = this.fileInput.current.files[0];
+        if (file !== undefined) {
             let loadedState = [];
             let fr = new FileReader();
             fr.onload = () => {
                 loadedState = JSON.parse(fr.result);
-                this.loadPreset(false, loadedState);
+                this.load(loadedState);
+                this.fileInputForm.current.reset();
             };
-            fr.readAsText(files[0]);
+            fr.readAsText(file);
         }
     }
 
@@ -97,19 +123,19 @@ class App extends Component {
         this.setState({tableState: state})
     }
 
-    loadPreset(isLoadedFromPreset, preset) {
-        let stateFromPreset = {...preset};
-        if (isLoadedFromPreset) {
+    load(saveOrPreset) {
+        let newTableState = {...saveOrPreset};
+        if (newTableState.prices === undefined) {
             let newPrices = [];
-            stateFromPreset.products.forEach(product => {
-                    stateFromPreset.cities.forEach(city => newPrices.push(
+            newTableState.products.forEach(product => {
+                    newTableState.cities.forEach(city => newPrices.push(
                         {key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0})
                     );
                 }
             );
-            stateFromPreset.prices = newPrices;
+            newTableState.prices = newPrices;
         }
-        this.table.current.setState(stateFromPreset);
+        this.table.current.setState(newTableState);
     }
 
 }

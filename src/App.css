@@ -3,13 +3,12 @@
 }
 
 .App-logo {
-    display: flex;
-    flex-grow: 0;
+
 }
 
 .App-logo-small {
-    height: 8vh;
-    margin-left: 15px;
+    height: 50px;
+    width: 50px;
 }
 
 .App-header-small {
@@ -53,12 +52,13 @@
 }
 
 .App-save-btn {
-    margin-right: 5%;
-    font-size: x-large;
+margin-right: 10px;
+    margin-left: 10px;
+    width: 75px;
 }
 
 .App-load-btn {
-    font-size: x-large;
+    width: 75px;
 }
 
 .App-controls-container {
