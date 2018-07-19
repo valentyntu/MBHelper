@@ -51,11 +51,13 @@ class App extends Component {
 
                         </ul>
                         <div className={"App-controls-container"}>
+
                             <PresetSelector ref={this.presetSelector} onChange={this.load.bind(this)}/>
                             <button
                                 className={"btn btn-success App-save-btn"}
                                 onClick={this.saveToFile.bind(this)}
                             >Save
+                                <div className="download-btn"/>
                             </button>
                             <button
                                 className={"btn btn-primary App-load-btn"}

@@ -8,3 +8,8 @@
     flex-direction: row;
     align-items: center;
 }
+
+.PresetSelector-load-btn{
+    margin-right: 10px;
+    height: 100%;
+}

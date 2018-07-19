@@ -1,21 +1,30 @@
 import React, {Component} from 'react';
-import presets from "./Presets";
 import "./PresetSelector.css"
+
+const PRESETS_URL = "http://localhost:4000/presets";
 
 class PresetSelector extends Component {
     constructor(props) {
         super(props);
-        this.state = {selectedItem: 0};
+        this.state = {
+            presets: [],
+            selectedItem: 0
+        };
         this.select = React.createRef();
     }
 
     render() {
         return (
             <div className={"PresetSelector-container"}>
-                <select ref={this.select} onChange={this.handlePresetChange.bind(this)}
+                <button className={"btn btn-primary PresetSelector-load-btn"}
+                        onClick={this.handlePresetChange.bind(this)}
+                >Load Preset</button>
+                <select ref={this.select}
                         className={"custom-select custom-select-lg PresetSelector-select"}>
-                    {presets.map(item => {
-                        return <option key={presets.indexOf(item)} value={presets.indexOf(item)}>{item.name}</option>
+                    {this.state.presets.map(item => {
+                        return <option key={this.state.presets.indexOf(item)} value={this.state.presets.indexOf(item)}>
+                            {item.name}
+                        </option>
                     })}
                 </select>
             </div>
@@ -23,11 +32,16 @@ class PresetSelector extends Component {
     }
 
     componentDidMount() {
+        this.loadPresets().then(presets => this.setState({presets: presets}));
+    }
 
+    loadPresets() {
+        return fetch(PRESETS_URL)
+            .then(r => r.json());
     }
 
     handlePresetChange() {
-        this.props.onChange(presets[this.select.current.value]);
+        this.props.onChange(this.state.presets[this.select.current.value]);
     }
 }
 
