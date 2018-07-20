@@ -14,9 +14,9 @@ class Navbar extends Component {
     }
 
     render() {
+        const {isAuthenticated} = this.props.auth;
         return (
-            <nav
-                className={"navbar navbar-dark bg-dark navbar-expand-lg"}>
+            <nav className={"navbar navbar-dark bg-dark navbar-expand-lg"}>
                 <a className="navbar-brand" href="/">
                     <img src={logo}
                          className="d-inline-block align-top App-logo-small" alt=""/>
@@ -31,24 +31,23 @@ class Navbar extends Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <div className={"controls-container"}>
-                                <PresetSelector ref={this.presetSelector} onChange={this.load.bind(this)}/>
-                                <FileSaver ref={this.fileSaver} tableState={this.props.tableState}/>
-                                <FileLoader onChange={this.load.bind(this)}/>
-                            </div>
+                            <PresetSelector ref={this.presetSelector} onChange={this.load.bind(this)}/>
                         </li>
                         <li className="nav-item">
-
+                            <FileSaver ref={this.fileSaver} tableState={this.props.tableState}/>
+                        </li>
+                        <li className={"nav-item"}>
+                            <FileLoader onChange={this.load.bind(this)}/>
                         </li>
                     </ul>
                     {
-                        !this.isAuthenticated() &&
+                        !isAuthenticated() &&
                         <div>
                             <button className={"btn btn-success login"} onClick={this.login.bind(this)}>Log in</button>
                         </div>
                     }
                     {
-                        this.isAuthenticated() &&
+                        isAuthenticated() &&
                         <div className={"login-container"}>
                             <span className={"greeting"}>Hi, {this.state.user.nickname}!</span>
                             <button className={"btn btn-success logout"} onClick={this.logout.bind(this)}>
@@ -76,10 +75,6 @@ class Navbar extends Component {
             });
         }
         this.props.onUpdate(newTableState);
-    }
-
-    isAuthenticated() {
-        return this.props.auth.isAuthenticated();
     }
 
     login() {

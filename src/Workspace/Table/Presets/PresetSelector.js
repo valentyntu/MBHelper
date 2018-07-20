@@ -16,7 +16,7 @@ class PresetSelector extends Component {
     render() {
         return (
             <div className={"PresetSelector-container"}>
-                <button className={"btn btn-primary PresetSelector-load-btn"}
+                <button className={"btn btn-primary selector-load-btn"}
                         onClick={this.handlePresetChange.bind(this)}
                 >Load Preset</button>
                 <select ref={this.select}

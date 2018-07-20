@@ -1,5 +1,5 @@
 .PresetSelector-select{
-    font-size: medium;
+    font-size: large;
 }
 
 .PresetSelector-container{
@@ -9,7 +9,7 @@
     align-items: center;
 }
 
-.PresetSelector-load-btn{
+.selector-load-btn{
     margin-right: 10px;
-    height: 100%;
+    font-size: x-large;
 }
