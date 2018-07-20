@@ -1,0 +1,43 @@
+.Intro{
+    display: flex;
+    flex-direction: column;
+}
+
+.App-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #222;
+    height: 35vh;
+    color: white;
+}
+
+.App-title {
+    font-size: xx-large;
+    margin-left: 15px;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+.App-hidden {
+    display: none;
+}
+
+.App-save-load-controls {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15px;
+}
+
+.App-logo{
+    display: flex;
+    flex-grow: revert;
+    height: 25vh;
+}
+
+.btn-fixed{
+    align-self: center;
+}

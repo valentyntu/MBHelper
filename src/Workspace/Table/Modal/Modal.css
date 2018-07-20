@@ -1,0 +1,23 @@
+.hidden {
+    display: none;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    text-align: center;
+}
+
+.modal-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+}
+
+.modal-input{
+    width: 50%;
+}

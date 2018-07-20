@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal'
+import "./Modal.css"
 
 const modalStyles = {
     content: {
@@ -47,11 +48,18 @@ class AddingModal extends Component {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div className="modal-body row justify-content-around align-items-center">
-                    <label>Name:</label>
-                    <input className={"form-control Table-modal-input"}
-                           onBlur={this.handleAddingNew.bind(this)}
-                    />
+                <div className="modal-body modal-content">
+                    <div className={"modal-row"}>
+                        <label>Name:</label>
+                        <input className={"form-control Table-modal-input"}
+                               onBlur={this.handleAddingNew.bind(this)}
+                        />
+                    </div>
+                    <div className={"modal-row" + (this.state.isAddingCity ? " hidden" : "")}>
+                        <label>Base Price:</label>
+                        <input className={"form-control modal=input"}/>
+                    </div>
+
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-success"

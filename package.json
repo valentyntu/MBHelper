@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "auth0-js": "^9.7.2",
     "bootstrap": "^4.1.2",
+    "history": "^4.7.2",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
-    "prop-types": "latest",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-modal": "^3.5.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4"
   },
   "scripts": {

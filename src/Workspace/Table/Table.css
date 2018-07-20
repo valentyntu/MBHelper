@@ -28,6 +28,6 @@
     cursor: pointer;
 }
 
-.Table-modal-input{
-    width: 70%;
+.hidden{
+    display: none;
 }

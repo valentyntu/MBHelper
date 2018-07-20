@@ -1,0 +1,8 @@
+.controls-container {
+    display: flex;
+}
+
+.App-logo-small {
+    height: 50px;
+    width: 50px;
+}

@@ -1,30 +1,26 @@
 import React, {Component} from 'react';
 import City from "./City/City";
 import Prices from "./Prices/Prices";
-import './Table.css'
 import AddingModal from "./Modal/AddingModal";
 import ConfirmationModal from "./Modal/ConfirmationModal";
 import Product from "./Product/Product";
+import presets from "./Presets/Presets";
+import './Table.css'
 
 class Table extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            cities: props.preset.cities,
-            products: props.preset.products,
-            prices: []
-        };
+        this.state = presets[0];
+        this.state.prices = [];
+        this.state.products.forEach(product => {
+            this.state.cities.forEach(city => this.state.prices.push(
+                {key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0})
+            )
+        });
 
         this.addingModal = React.createRef();
         this.confirmationModal = React.createRef();
-
-        this.state.products.forEach(product => {
-                this.state.cities.forEach(city => this.state.prices.push(
-                    {key: city + "-" + product, buy: Number.MAX_SAFE_INTEGER, sell: 0})
-                );
-            }
-        );
     }
 
     render() {
@@ -35,7 +31,8 @@ class Table extends Component {
                     <tr>
                         <th className={"Table-heading"}>#</th>
                         {this.state.products.map(product => {
-                            return <Product key={product} productName={product} onChange={this.showRemoveProductConfirmation.bind(this)}/>
+                            return <Product key={product} productName={product}
+                                            onChange={this.showRemoveProductConfirmation.bind(this)}/>
                         })}
 
                         <th className={"Table-heading"}>
@@ -167,6 +164,8 @@ class Table extends Component {
     }
 
     componentDidMount() {
+
+
         this.pushState();
     }
 
