@@ -3,9 +3,6 @@ import "./Intro.css"
 import logo from "../icon.png"
 
 class Intro extends Component {
-    constructor() {
-        super();
-    }
 
     render() {
         return (

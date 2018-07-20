@@ -6,3 +6,24 @@
     height: 50px;
     width: 50px;
 }
+
+.login {
+    font-size: x-large;
+}
+
+.logout {
+    font-size: x-large;
+}
+
+.greeting {
+    font-size: x-large;
+    color: white;
+    margin-right: 10px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}

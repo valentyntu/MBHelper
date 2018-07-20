@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import "./FileSaver.css"
 
 class FileSaver extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (

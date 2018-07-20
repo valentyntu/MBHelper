@@ -14,7 +14,7 @@ class Workspace extends Component {
     render() {
         return (
             <div>
-                <Navbar onUpdate={this.load.bind(this)}/>
+                <Navbar auth={this.props.auth} onUpdate={this.load.bind(this)}/>
                 <Table ref={this.table}
                        onChange={this.updateTableState.bind(this)}
                 />

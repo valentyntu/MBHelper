@@ -8,6 +8,7 @@ import "./Navbar.css"
 class Navbar extends Component {
     constructor(props) {
         super(props);
+        this.state = {user: []};
         this.presetSelector = React.createRef();
         this.fileSaver = React.createRef();
     }
@@ -30,18 +31,31 @@ class Navbar extends Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-
+                            <div className={"controls-container"}>
+                                <PresetSelector ref={this.presetSelector} onChange={this.load.bind(this)}/>
+                                <FileSaver ref={this.fileSaver} tableState={this.props.tableState}/>
+                                <FileLoader onChange={this.load.bind(this)}/>
+                            </div>
                         </li>
                         <li className="nav-item">
 
                         </li>
-
                     </ul>
-                    <div className={"controls-container"}>
-                        <PresetSelector ref={this.presetSelector} onChange={this.load.bind(this)}/>
-                        <FileSaver ref={this.fileSaver} tableState={this.props.tableState}/>
-                        <FileLoader onChange={this.load.bind(this)}/>
-                    </div>
+                    {
+                        !this.isAuthenticated() &&
+                        <div>
+                            <button className={"btn btn-success login"} onClick={this.login.bind(this)}>Log in</button>
+                        </div>
+                    }
+                    {
+                        this.isAuthenticated() &&
+                        <div className={"login-container"}>
+                            <span className={"greeting"}>Hi, {this.state.user.nickname}!</span>
+                            <button className={"btn btn-success logout"} onClick={this.logout.bind(this)}>
+                                Log out
+                            </button>
+                        </div>
+                    }
                 </div>
             </nav>
         )
@@ -62,6 +76,24 @@ class Navbar extends Component {
             });
         }
         this.props.onUpdate(newTableState);
+    }
+
+    isAuthenticated() {
+        return this.props.auth.isAuthenticated();
+    }
+
+    login() {
+        this.props.auth.login();
+    }
+
+    logout() {
+        this.props.auth.logout();
+    }
+
+    componentDidMount() {
+        this.props.auth.getUserInfo()
+            .then(user => this.setState({user: user}))
+            .catch(e => console.log(e))
     }
 }
 
