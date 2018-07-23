@@ -23,28 +23,30 @@ class Navbar extends Component {
                     <img src={logo}
                          className="d-inline-block align-top App-logo-small" alt=""/>
                 </a>
-                <a className={"navbar-brand"} href={"/"}>Mount & Blade Trade Helper</a>
+                <a className={"navbar-brand"} href={"/"}>M&B Trade Helper</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                        data-target="#navbarToggleableContent" aria-controls="navbarToggleableContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"/>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <div className="collapse navbar-collapse" id="navbarToggleableContent">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
+                        <li className={"nav-item my-2 my-lg-0"}>
                             <PresetSelector ref={this.presetSelector} onChange={this.load.bind(this)}/>
                         </li>
-                        <li className="nav-item">
+                        <li className={"nav-item my-2 my-lg-0"}>
                             <FileSaver ref={this.fileSaver} tableState={this.props.tableState}/>
+                            <FileLoader onChange={this.load.bind(this)}/>
                         </li>
                         <li className={"nav-item"}>
-                            <FileLoader onChange={this.load.bind(this)}/>
+
                         </li>
                     </ul>
                     {
                         !isAuthenticated() &&
-                        <div>
+                        <div className={"login-container my-2 my-lg-0"}>
                             <button className={"btn btn-success login"} onClick={this.login.bind(this)}>
                                 Log in
                             </button>
@@ -52,7 +54,7 @@ class Navbar extends Component {
                     }
                     {
                         isAuthenticated() &&
-                        <div className={"login-container"}>
+                        <div className={"login-container my-2 my-lg-0"}>
                             <span className={"greeting"}>Hi, {this.state.user.nickname}!</span>
                             <button className={"btn btn-success logout"} onClick={this.logout.bind(this)}>
                                 Log out
