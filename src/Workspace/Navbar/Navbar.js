@@ -43,10 +43,12 @@ class Navbar extends Component {
                         <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
                             <FileLoader onChange={this.load.bind(this)}/>
                         </li>
-                        <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
-                            <CloudSaver tableState={this.props.tableState} auth={this.props.auth}/>
-                        </li>
-
+                        {
+                            isAuthenticated() &&
+                            <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
+                                <CloudSaver tableState={this.props.tableState} auth={this.props.auth}/>
+                            </li>
+                        }
                     </ul>
                     {
                         !isAuthenticated() &&
