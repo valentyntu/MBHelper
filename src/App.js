@@ -26,6 +26,7 @@ class App extends Component {
                         }}/>
                         <Route path="/callback" render={(props) => {
                             handleAuthentication(props);
+                            window.location.href = "/workspace";
                             return <Redirect to={"/workspace"}/>
                         }}/>
                     </Switch>

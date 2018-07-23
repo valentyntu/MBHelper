@@ -8,7 +8,9 @@ import "./Navbar.css"
 class Navbar extends Component {
     constructor(props) {
         super(props);
-        this.state = {user: []};
+        this.state = {
+            user: []
+        };
         this.presetSelector = React.createRef();
         this.fileSaver = React.createRef();
     }
@@ -43,7 +45,9 @@ class Navbar extends Component {
                     {
                         !isAuthenticated() &&
                         <div>
-                            <button className={"btn btn-success login"} onClick={this.login.bind(this)}>Log in</button>
+                            <button className={"btn btn-success login"} onClick={this.login.bind(this)}>
+                                Log in
+                            </button>
                         </div>
                     }
                     {
@@ -83,9 +87,11 @@ class Navbar extends Component {
 
     logout() {
         this.props.auth.logout();
+        this.setState({isAuthenticated: false});
     }
 
-    componentDidMount() {
+
+    componentWillMount() {
         this.props.auth.getUserInfo()
             .then(user => this.setState({user: user}))
             .catch(e => console.log(e))
