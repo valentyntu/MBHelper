@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import Auth from "./Auth/Auth";
 import './App.css';
 import Intro from "./Intro/Intro";
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Workspace from "./Workspace/Workspace";
+import Callback from "./Auth/Callback";
 
 const auth = new Auth();
 
@@ -26,8 +27,7 @@ class App extends Component {
                         }}/>
                         <Route path="/callback" render={(props) => {
                             handleAuthentication(props);
-                            window.location.href = "/workspace";
-                            return <Redirect to={"/workspace"}/>
+                            return <Callback {...props}/>
                         }}/>
                     </Switch>
                 </div>

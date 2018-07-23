@@ -1,0 +1,12 @@
+.Callback-container{
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.Callback-image{
+    max-height: 25vh;
+}
