@@ -20,7 +20,7 @@ class PresetSelector extends Component {
                         onClick={this.handlePresetChange.bind(this)}
                 >Load Preset</button>
                 <select ref={this.select}
-                        className={"custom-select custom-select-lg PresetSelector-select"}>
+                        className={"custom-select custom-select-lg ml-2 PresetSelector-select"}>
                     {this.state.presets.map(item => {
                         return <option key={this.state.presets.indexOf(item)} value={this.state.presets.indexOf(item)}>
                             {item.name}

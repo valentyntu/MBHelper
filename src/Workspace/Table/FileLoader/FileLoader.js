@@ -11,7 +11,7 @@ class FileLoader extends Component {
     render() {
         return (
             <button
-                className={"btn btn-primary load-btn"}
+                className={"btn btn-primary load-btn btn-block"}
                 onClick={this.showFileInputDialog.bind(this)}>
                 <form className={"App-hidden"} ref={this.fileInputForm}>
                     <input ref={this.fileInput}

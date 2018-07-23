@@ -4,6 +4,7 @@ import FileSaver from "../Table/FileSaver/FileSaver";
 import FileLoader from "../Table/FileLoader/FileLoader";
 import logo from "../../icon.png"
 import "./Navbar.css"
+import CloudSaver from "../Table/CloudSaver/CloudSaver";
 
 class Navbar extends Component {
     constructor(props) {
@@ -33,16 +34,19 @@ class Navbar extends Component {
 
                 <div className="collapse navbar-collapse" id="navbarToggleableContent">
                     <ul className="navbar-nav mr-auto">
-                        <li className={"nav-item my-2 my-lg-0"}>
+                        <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
                             <PresetSelector ref={this.presetSelector} onChange={this.load.bind(this)}/>
                         </li>
-                        <li className={"nav-item my-2 my-lg-0"}>
+                        <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
                             <FileSaver ref={this.fileSaver} tableState={this.props.tableState}/>
+                        </li>
+                        <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
                             <FileLoader onChange={this.load.bind(this)}/>
                         </li>
-                        <li className={"nav-item"}>
-
+                        <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
+                            <CloudSaver tableState={this.props.tableState} auth={this.props.auth}/>
                         </li>
+
                     </ul>
                     {
                         !isAuthenticated() &&
@@ -91,7 +95,6 @@ class Navbar extends Component {
         this.props.auth.logout();
         this.setState({isAuthenticated: false});
     }
-
 
     componentWillMount() {
         this.props.auth.getUserInfo()

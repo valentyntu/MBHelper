@@ -6,7 +6,7 @@ class FileSaver extends Component {
     render() {
         return (
             <button
-                className={"btn btn-success save-btn"}
+                className={"btn btn-success save-btn btn-block"}
                 onClick={this.saveToFile.bind(this)}
             >Save
                 <div className="download-btn"/>
