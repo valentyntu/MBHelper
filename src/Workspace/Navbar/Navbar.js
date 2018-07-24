@@ -95,7 +95,6 @@ class Navbar extends Component {
 
     logout() {
         this.props.auth.logout();
-        this.setState({isAuthenticated: false});
     }
 
     componentWillMount() {

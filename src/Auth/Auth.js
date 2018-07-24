@@ -1,4 +1,5 @@
 import auth0 from 'auth0-js';
+import history from '../history';
 
 export default class Auth {
     auth0 = new auth0.WebAuth({
@@ -25,10 +26,11 @@ export default class Auth {
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
-                window.location.href = "/workspace";
+
             } else if (err) {
                 console.log(err);
             }
+            history.replace("/workspace");
         });
     }
 
@@ -43,6 +45,7 @@ export default class Auth {
         localStorage.removeItem('access_token');
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
+        history.replace("/workspace");
     }
 
     isAuthenticated() {
