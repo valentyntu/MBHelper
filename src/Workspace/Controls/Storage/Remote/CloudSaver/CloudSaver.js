@@ -10,7 +10,7 @@ class CloudSaver extends Component {
                 className={"btn btn-success upload-btn btn-block"}
                 onClick={this.uploadSave.bind(this)}
             >Upload
-                <div className="download-btn"/>
+                <i className="fas fa-cloud-upload-alt ml-2"/>
             </button>
         )
     }

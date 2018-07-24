@@ -21,6 +21,7 @@ class FileLoader extends Component {
                     />
                 </form>
                 Load
+                <i className="fas fa-folder-open ml-2"/>
             </button>
         )
     }

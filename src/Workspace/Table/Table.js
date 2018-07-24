@@ -4,7 +4,7 @@ import Prices from "./Prices/Prices";
 import AddingModal from "./Modal/AddingModal";
 import ConfirmationModal from "./Modal/ConfirmationModal";
 import Product from "./Product/Product";
-import presets from "./Presets/Presets";
+import presets from "../Controls/Presets/Presets";
 import './Table.css'
 
 class Table extends Component {

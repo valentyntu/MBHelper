@@ -9,7 +9,7 @@ class FileSaver extends Component {
                 className={"btn btn-success save-btn btn-block"}
                 onClick={this.saveToFile.bind(this)}
             >Save
-                <div className="download-btn"/>
+                <i className="fas fa-save ml-2"/>
             </button>
         )
     }

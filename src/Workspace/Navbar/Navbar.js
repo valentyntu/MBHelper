@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import PresetSelector from "../Table/Presets/PresetSelector";
-import FileSaver from "../Table/FileSaver/FileSaver";
-import FileLoader from "../Table/FileLoader/FileLoader";
+import PresetSelector from "../Controls/Presets/PresetSelector";
+import FileSaver from "../Controls/Storage/Local/FileSaver/FileSaver";
+import FileLoader from "../Controls/Storage/Local/FileLoader/FileLoader";
 import logo from "../../icon.png"
 import "./Navbar.css"
-import CloudSaver from "../Table/CloudSaver/CloudSaver";
+import CloudSaver from "../Controls/Storage/Remote/CloudSaver/CloudSaver";
+import CloudLoader from "../Controls/Storage/Remote/CloudLoader/CloudLoader";
 
 class Navbar extends Component {
     constructor(props) {
@@ -47,6 +48,12 @@ class Navbar extends Component {
                             isAuthenticated() &&
                             <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
                                 <CloudSaver tableState={this.props.tableState} auth={this.props.auth}/>
+                            </li>
+                        }
+                        {
+                            isAuthenticated() &&
+                            <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
+                                <CloudLoader auth={this.props.auth}/>
                             </li>
                         }
                     </ul>
