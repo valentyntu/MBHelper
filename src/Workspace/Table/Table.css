@@ -4,28 +4,11 @@
 .Table-heading{
 }
 
-.Table-add-btn{
+.Table-btn{
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background-color: #28a745;
-    border-color: #28a745;
-    color: white;
-    font-weight: bold;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.Table-remove-btn{
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: #dc3545;
-    border-color: #a70b0a;
-    color: white;
-    font-weight: bold;
-    font-size: 12px;
-    cursor: pointer;
+    padding: 1px;
 }
 
 .hidden{

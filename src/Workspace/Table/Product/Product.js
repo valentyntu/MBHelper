@@ -7,10 +7,12 @@ class Product extends Component {
         return (
             <th className={"Table-heading"}>
                 <div className={"row justify-content-center align-items-center"}>
-                    <div>{this.props.productName}</div>
+                    <span>
+                        {this.props.productName}
+                    </span>
                     <button onClick={this.handleRemoveProduct.bind(this)}
-                            className={"Table-remove-btn ml-2"}>
-                        -
+                            className={"btn btn-danger Table-btn ml-1"}>
+                        <i className="fas fa-minus"/>
                     </button>
                 </div>
             </th>
@@ -21,7 +23,7 @@ class Product extends Component {
 
     }
 
-    handleRemoveProduct(){
+    handleRemoveProduct() {
         this.props.onChange(this.props.productName);
     }
 }

@@ -38,8 +38,8 @@ class Table extends Component {
                         <th className={"Table-heading"}>
                             <button onClick={this.showAddProductModal.bind(this)}
                                     type={"button"}
-                                    className={"Table-add-btn"}>
-                                +
+                                    className={"btn btn-success Table-btn"}>
+                                <i className="fas fa-plus"/>
                             </button>
                         </th>
                     </tr>
@@ -59,9 +59,9 @@ class Table extends Component {
                                 />
                             })}
                             <td>
-                                <button className={"Table-remove-btn"}
-                                        onClick={this.showRemoveCityConfirmation.bind(this, city)}>
-                                    -
+                                <button onClick={this.showRemoveCityConfirmation.bind(this, city)}
+                                    className={"btn btn-danger Table-btn"}>
+                                    <i className="fas fa-minus"/>
                                 </button>
                             </td>
                         </tr>
@@ -71,8 +71,8 @@ class Table extends Component {
                         <th className={"Table-heading"}>
                             <button onClick={this.showAddCityModal.bind(this)}
                                     type={"button"}
-                                    className={"Table-add-btn"}>
-                                +
+                                    className={"btn btn-success Table-btn"}>
+                                <i className="fas fa-plus"/>
                             </button>
                         </th>
                     </tr>

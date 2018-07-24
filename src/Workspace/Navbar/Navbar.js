@@ -60,7 +60,7 @@ class Navbar extends Component {
                     {
                         !isAuthenticated() &&
                         <div className={"login-container my-2 my-lg-0"}>
-                            <button className={"btn btn-success login"} onClick={this.login.bind(this)}>
+                            <button className={"btn btn-success login btn-block"} onClick={this.login.bind(this)}>
                                 Log in
                             </button>
                         </div>
@@ -69,7 +69,7 @@ class Navbar extends Component {
                         isAuthenticated() &&
                         <div className={"login-container my-2 my-lg-0"}>
                             <span className={"greeting"}>Hi, {this.state.user.nickname}!</span>
-                            <button className={"btn btn-success logout"} onClick={this.logout.bind(this)}>
+                            <button className={"btn btn-success logout btn-block"} onClick={this.logout.bind(this)}>
                                 Log out
                             </button>
                         </div>
