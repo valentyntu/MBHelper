@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import Navbar from "./Navbar/Navbar";
 import Table from "./Table/Table";
+import Help from "../Help/Help";
 
 class Workspace extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             tableState: []
         };
@@ -15,6 +16,7 @@ class Workspace extends Component {
         return (
             <div>
                 <Navbar auth={this.props.auth} tableState={this.state.tableState} onUpdate={this.load.bind(this)}/>
+                {this.props.isHelpShown && <Help/>}
                 <Table ref={this.table}
                        onChange={this.updateTableState.bind(this)}
                 />
@@ -24,6 +26,9 @@ class Workspace extends Component {
 
     componentDidMount() {
 
+    }
+
+    componentWillMount() {
     }
 
     updateTableState(state) {

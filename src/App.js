@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Auth from "./Auth/Auth";
 import './App.css';
 import Intro from "./Intro/Intro";
-import {Router, Route, Switch} from "react-router-dom";
+import {Route, Router, Switch} from "react-router-dom";
 import Workspace from "./Workspace/Workspace";
 import Callback from "./Auth/Callback";
 import history from './history';
@@ -24,7 +24,10 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" component={Intro}/>
                         <Route path="/workspace" render={(props) => {
-                            return <Workspace auth={auth} {...props}/>
+                            return <Workspace auth={auth} isHelpShown={false} {...props}/>
+                        }}/>
+                        <Route path="/help" render={(props) => {
+                            return <Workspace auth={auth} isHelpShown={true} {...props}/>
                         }}/>
                         <Route path="/callback" render={(props) => {
                             handleAuthentication(props);

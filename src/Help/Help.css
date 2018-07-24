@@ -1,0 +1,20 @@
+.Help-container{
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #e6e6e6;
+
+}
+
+.Help-btn-dismiss{
+    font-size: x-large;
+}
+
+.Help-p{
+    text-align: justify;
+}
+
+.Help-sub-header{
+    text-align: left;
+    margin-left: 3%;
+}

@@ -6,7 +6,7 @@ import logo from "../../icon.png"
 import "./Navbar.css"
 import CloudSaver from "../Controls/Storage/Remote/CloudSaver/CloudSaver";
 import CloudLoader from "../Controls/Storage/Remote/CloudLoader/CloudLoader";
-import HelpModal from "./HelpModal";
+import history from "../../history";
 
 class Navbar extends Component {
     constructor(props) {
@@ -16,7 +16,6 @@ class Navbar extends Component {
         };
         this.presetSelector = React.createRef();
         this.fileSaver = React.createRef();
-        this.helpModal = React.createRef();
     }
 
     render() {
@@ -30,10 +29,9 @@ class Navbar extends Component {
                 <a className={"navbar-brand"} href={"/"}>M&B Trade Helper</a>
                 <div className={"help-container my-2 mx-lg-2"}>
                     <button className={"btn btn-info btn-block"}
-                            onClick={this.showHelp.bind(this)}
+                    onClick={() => history.replace("/help")}
                     >
                         <i className="fas fa-question fa-2x"/>
-                        <HelpModal ref={this.helpModal}/>
                     </button>
                 </div>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -122,10 +120,6 @@ class Navbar extends Component {
                 .then(user => this.setState({user: user}))
                 .catch(e => console.log(e))
         }
-    }
-
-    showHelp() {
-        this.helpModal.current.setState({isOpen: true})
     }
 }
 
