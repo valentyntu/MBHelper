@@ -105,11 +105,12 @@ class Table extends Component {
     remove(type, value) {
         if (type === "city") {
             this.removeCity(value);
+            this.removeRelatedPriceEntries(`${value}-`);
         }
         if (type === "product") {
             this.removeProduct(value);
+            this.removeRelatedPriceEntries(`-${value}`);
         }
-        this.removeRelatedPriceEntries(value);
     }
 
     removeCity(cityName) {
