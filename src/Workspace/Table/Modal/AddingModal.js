@@ -18,7 +18,9 @@ class AddingModal extends Component {
         super();
         this.state = {
             isOpen: false,
-            isAddingCity: false
+            isAddingCity: false,
+            newName: "",
+            isValid: undefined
         };
 
         this.openAddingModal = this.openAddingModal.bind(this);
@@ -51,9 +53,18 @@ class AddingModal extends Component {
                 <div className={"Modal-content modal-body"}>
                     <div className={"Modal-row"}>
                         <span className={"mr-2"}>Name:</span>
-                        <input className={"form-control Table-modal-input"}
-                               onBlur={this.handleAddingNew.bind(this)}
-                        />
+                        <div>
+                            <input className={"form-control Table-modal-input" +
+                            (this.state.isValid ? " is-valid" : (this.state.isValid === undefined ? "" : " is-invalid"))
+                            }
+                                   onBlur={this.setNewName.bind(this)}
+                                   type={"text"}
+                                   required={true}
+                            />
+                            {this.state.isValid === false &&
+                            <div className={"Modal-hint-invalid"}>Should be unique and not empty.</div>}
+                        </div>
+
                     </div>
                 </div>
                 <div className="modal-footer">
@@ -70,9 +81,29 @@ class AddingModal extends Component {
         )
     }
 
-    handleAddingNew(ev) {
-        this.props.onChange((this.state.isAddingCity ? "city" : "product"), ev.target.value);
-        this.closeAddingModal();
+    handleAddingNew() {
+        if (this.state.isValid) {
+            this.props.onChange((this.state.isAddingCity ? "city" : "product"), this.state.newName);
+            this.closeAddingModal();
+        }
+    }
+
+    setNewName(ev) {
+        let newName = ev.target.value;
+        this.setState({
+            newName: newName,
+            isValid: this.validateNewName(newName)
+        })
+    }
+
+    validateNewName(newName) {
+        if (!this.state.invalidValues.includes(newName) && newName !== "") {
+            return true;
+        } else {
+
+            return false;
+        }
+
     }
 
     openAddingModal() {
@@ -91,7 +122,7 @@ class AddingModal extends Component {
 
     }
 
-    componentWillMount(){
+    componentWillMount() {
         Modal.setAppElement('body');
     }
 }

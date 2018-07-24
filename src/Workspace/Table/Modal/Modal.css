@@ -15,6 +15,12 @@
     align-items: center;
 }
 
-.Modal-input{
+.Modal-input {
     width: 50%;
+}
+
+.Modal-hint-invalid {
+    color: red;
+    font-size: small;
+    text-align: center;
 }

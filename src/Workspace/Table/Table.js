@@ -26,7 +26,7 @@ class Table extends Component {
     render() {
         return (
             <div>
-                <table className={"Table table table-bordered table-striped"}>
+                <table className={"table-bordered table-striped"}>
                     <thead>
                     <tr>
                         <th className={"Table-heading"}>#</th>
@@ -60,7 +60,7 @@ class Table extends Component {
                             })}
                             <td>
                                 <button onClick={this.showRemoveCityConfirmation.bind(this, city)}
-                                    className={"btn btn-danger Table-btn"}>
+                                        className={"btn btn-danger Table-btn"}>
                                     <i className="fas fa-minus"/>
                                 </button>
                             </td>
@@ -172,14 +172,18 @@ class Table extends Component {
     showAddProductModal() {
         this.addingModal.current.setState({
             isAddingCity: false,
-            isOpen: true
+            isOpen: true,
+            invalidValues: this.state.products,
+            isValid: undefined
         });
     }
 
     showAddCityModal() {
         this.addingModal.current.setState({
             isAddingCity: true,
-            isOpen: true
+            isOpen: true,
+            invalidValues: this.state.cities,
+            isValid: undefined
         });
     }
 

@@ -1,16 +1,20 @@
-.Table {
-}
-
-.Table-heading{
-}
-
-.Table-btn{
+.Table-btn {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     padding: 1px;
 }
 
-.hidden{
+.hidden {
     display: none;
+}
+
+th {
+    padding: .4rem;
+}
+
+table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
 }
