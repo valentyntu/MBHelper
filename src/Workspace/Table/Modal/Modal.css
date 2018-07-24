@@ -2,22 +2,19 @@
     display: none;
 }
 
-.modal-content {
+.Modal-content {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    align-items: stretch;
-    text-align: center;
 }
 
-.modal-row {
+.Modal-row {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    text-align: center;
 }
 
-.modal-input{
+.Modal-input{
     width: 50%;
 }
