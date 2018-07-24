@@ -29,3 +29,11 @@
     justify-content: center;
     white-space:nowrap;
 }
+
+.help-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import "./CloudSaver.css"
+import savesURL from "../savesURL"
 
-const savesURL = "http://localhost:4000/saves";
 
 class CloudSaver extends Component {
     render() {

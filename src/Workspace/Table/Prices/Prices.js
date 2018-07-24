@@ -36,14 +36,18 @@ class Prices extends Component {
     onBuyPriceChange(e) {
         let value = e.target.value;
         if (value !== "") {
-            this.props.onChange("buy", parseInt(value, 10));
+            this.props.onChange("buy", parseFloat(value));
+        } else {
+            this.props.onChange("buy", Number.MAX_SAFE_INTEGER);
         }
     }
 
     onSellPriceChange(e) {
         let value = e.target.value;
         if (value !== "") {
-            this.props.onChange("sell", parseInt(value, 10));
+            this.props.onChange("sell", parseFloat(value));
+        } else {
+            this.props.onChange("sell", 0);
         }
     }
 

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import "./CloudLoader.css"
 
-const savesURL = "http://localhost:4000/saves";
-
 class CloudLoader extends Component {
     render() {
         return (

@@ -6,6 +6,7 @@ import logo from "../../icon.png"
 import "./Navbar.css"
 import CloudSaver from "../Controls/Storage/Remote/CloudSaver/CloudSaver";
 import CloudLoader from "../Controls/Storage/Remote/CloudLoader/CloudLoader";
+import HelpModal from "./HelpModal";
 
 class Navbar extends Component {
     constructor(props) {
@@ -15,6 +16,7 @@ class Navbar extends Component {
         };
         this.presetSelector = React.createRef();
         this.fileSaver = React.createRef();
+        this.helpModal = React.createRef();
     }
 
     render() {
@@ -26,6 +28,14 @@ class Navbar extends Component {
                          className="d-inline-block align-top App-logo-small" alt=""/>
                 </a>
                 <a className={"navbar-brand"} href={"/"}>M&B Trade Helper</a>
+                <div className={"help-container my-2 mx-lg-2"}>
+                    <button className={"btn btn-info btn-block"}
+                            onClick={this.showHelp.bind(this)}
+                    >
+                        <i className="fas fa-question fa-2x"/>
+                        <HelpModal ref={this.helpModal}/>
+                    </button>
+                </div>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarToggleableContent" aria-controls="navbarToggleableContent"
                         aria-expanded="false"
@@ -57,6 +67,8 @@ class Navbar extends Component {
                             </li>
                         }
                     </ul>
+
+
                     {
                         !isAuthenticated() &&
                         <div className={"login-container my-2 my-lg-0"}>
@@ -105,9 +117,15 @@ class Navbar extends Component {
     }
 
     componentWillMount() {
-        this.props.auth.getUserInfo()
-            .then(user => this.setState({user: user}))
-            .catch(e => console.log(e))
+        if (this.props.auth.isAuthenticated()) {
+            this.props.auth.getUserInfo()
+                .then(user => this.setState({user: user}))
+                .catch(e => console.log(e))
+        }
+    }
+
+    showHelp() {
+        this.helpModal.current.setState({isOpen: true})
     }
 }
 
