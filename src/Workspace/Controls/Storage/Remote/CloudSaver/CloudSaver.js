@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import "./CloudSaver.css"
-import savesURL from "../savesURL"
-
+import "./CloudSaver.css";
+import savesURL from "../savesURL";
+import axios from 'axios';
 
 class CloudSaver extends Component {
     render() {
@@ -25,13 +25,7 @@ class CloudSaver extends Component {
             .then(userInfo => {
                 save.sub = userInfo.sub;
                 console.log(JSON.stringify(save));
-                return fetch(savesURL, {
-                    method: 'POST',
-                    body: JSON.stringify(save),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
+                return axios.post(savesURL, save);
             })
     }
 }

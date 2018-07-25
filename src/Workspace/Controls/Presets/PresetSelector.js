@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import "./PresetSelector.css"
+import axios from 'axios';
 
 const PRESETS_URL = "http://localhost:4000/presets";
 
@@ -18,7 +19,8 @@ class PresetSelector extends Component {
             <div className={"PresetSelector-container"}>
                 <button className={"btn btn-primary selector-load-btn"}
                         onClick={this.handlePresetChange.bind(this)}
-                >Load Preset</button>
+                >Load Preset
+                </button>
                 <select ref={this.select}
                         className={"custom-select custom-select-lg ml-2 PresetSelector-select"}>
                     {this.state.presets.map(item => {
@@ -35,13 +37,12 @@ class PresetSelector extends Component {
 
     }
 
-    componentWillMount(){
-        this.loadPresets().then(presets => this.setState({presets: presets}));
+    componentWillMount() {
+        this.loadPresets().then(presets => this.setState({presets: presets.data}));
     }
 
     loadPresets() {
-        return fetch(PRESETS_URL)
-            .then(r => r.json());
+        return axios.get(PRESETS_URL);
     }
 
     handlePresetChange() {
