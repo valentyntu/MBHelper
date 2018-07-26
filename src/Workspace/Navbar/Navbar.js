@@ -7,15 +7,21 @@ import "./Navbar.css"
 import CloudSaver from "../Controls/Storage/Remote/CloudSaver/CloudSaver";
 import CloudLoader from "../Controls/Storage/Remote/CloudLoader/CloudLoader";
 import history from "../../history";
+import CloudModal from "../Controls/Storage/Remote/CloudModal/CloudModal";
+import savesURL from "../Controls/Storage/Remote/savesURL";
+import axios from "axios/index";
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: []
+            user: [],
+            loadedSaves: [],
+            newSaveName: ""
         };
         this.presetSelector = React.createRef();
         this.fileSaver = React.createRef();
+        this.cloudModal = React.createRef();
     }
 
     render() {
@@ -29,7 +35,7 @@ class Navbar extends Component {
                 <a className={"navbar-brand"} href={"/"}>M&B Trade Helper</a>
                 <div className={"help-container my-2 mx-lg-2"}>
                     <button className={"btn btn-info btn-block"}
-                    onClick={() => history.replace("/help")}
+                            onClick={() => history.replace("/help")}
                     >
                         <i className="fas fa-question fa-2x"/>
                     </button>
@@ -54,14 +60,29 @@ class Navbar extends Component {
                         </li>
                         {
                             isAuthenticated() &&
+                            <CloudModal ref={this.cloudModal}
+                                        saves={this.state.loadedSaves}
+                                        onChange={this.handleModalAction.bind(this)}
+                                        auth={this.props.auth}
+                            />
+
+                        }
+                        {
+                            isAuthenticated() &&
                             <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
-                                <CloudSaver tableState={this.props.tableState} auth={this.props.auth}/>
+                                <CloudSaver modal={this.cloudModal}
+                                            tableState={this.props.tableState}
+                                            saveName={this.state.newSaveName}
+                                            auth={this.props.auth}/>
                             </li>
                         }
                         {
                             isAuthenticated() &&
                             <li className={"nav-item my-2 my-lg-0 mx-lg-1"}>
-                                <CloudLoader auth={this.props.auth}/>
+                                <CloudLoader modal={this.cloudModal}
+                                             auth={this.props.auth}
+                                             onChange={this.handleLoadingFromCloud.bind(this)}/>
+
                             </li>
                         }
                     </ul>
@@ -89,6 +110,18 @@ class Navbar extends Component {
         )
     }
 
+    handleModalAction(action, value) {
+        if (action === "upload") {
+            this.uploadSave(value)
+        }
+        if (action === "download") {
+            this.load(value);
+        }
+        if (action === "update") {
+            this.setState({loadedSaves: value})
+        }
+    }
+
     load(saveOrPreset) {
         let newTableState = {...saveOrPreset};
 
@@ -106,6 +139,21 @@ class Navbar extends Component {
         this.props.onUpdate(newTableState);
     }
 
+    uploadSave(name) {
+        let save = {...this.props.tableState};
+        this.props.auth.getUserInfo()
+            .then(userInfo => {
+                save.sub = userInfo.sub;
+                save.name = name;
+                return axios.post(savesURL, save);
+            })
+    }
+
+    handleLoadingFromCloud(saves) {
+
+        this.setState({loadedSaves: saves});
+    }
+
     login() {
         this.props.auth.login();
     }
@@ -116,6 +164,7 @@ class Navbar extends Component {
 
     componentWillMount() {
         if (this.props.auth.isAuthenticated()) {
+            axios.defaults.headers.common['Authorization'] = localStorage.getItem("id_token");
             this.props.auth.getUserInfo()
                 .then(user => this.setState({user: user}))
                 .catch(e => console.log(e))
