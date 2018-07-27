@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import "./PresetSelector.css"
 import axios from 'axios';
 
-const PRESETS_URL = "http://localhost:4000/presets";
+const PRESETS_URL = "https://mb-helper.herokuapp.com/api/presets";
 
 class PresetSelector extends Component {
     constructor(props) {

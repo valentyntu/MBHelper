@@ -6,7 +6,8 @@ export default class Auth {
     auth0 = new auth0.WebAuth({
         domain: 'mbhelper.eu.auth0.com',
         clientID: 'A8fsu8Vr4pvp0uTpxBaPzKgvXzJkk3gQ',
-        redirectUri: 'http://localhost:3000/callback',
+        redirectUri: 'https://mb-helper.herokuapp.com/callback',
+        // redirectUri: 'http://localhost:3000/callback',
         audience: 'https://mbhelper.eu.auth0.com/userinfo',
         responseType: 'token id_token',
         scope: 'openid profile'
@@ -40,6 +41,7 @@ export default class Auth {
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
+        localStorage.setItem('sub', this.getUserInfo().sub);
         axios.defaults.headers.common['Authorization'] = authResult.idToken;
     }
 
@@ -47,6 +49,7 @@ export default class Auth {
         localStorage.removeItem('access_token');
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
+        localStorage.removeItem('sub');
         axios.defaults.headers.common['Authorization'] = "";
         history.replace("/workspace");
     }

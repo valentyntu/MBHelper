@@ -1,5 +1,7 @@
 .PresetSelector-select{
-    font-size: large;
+    font-size: medium;
+    height: auto;
+    width: auto;
 }
 
 .PresetSelector-container{
@@ -7,8 +9,9 @@
     flex-wrap: nowrap;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
 
 .selector-load-btn{
-    font-size: x-large;
+    font-size: medium;
 }

@@ -101,17 +101,25 @@ class CloudModal extends Component {
                         <div className="modal-body">
                             <ul className="list-group">
                                 {this.state.saves.map(save => {
-                                    return <li key={save._id} className="list-group-item list-group-item-info">
-                                        <div className="d-flex flex-row flex-nowrap button-list-item"
-                                             onClick={this.handleLoading.bind(this, save)}>
-                                            <div>{save.name}</div>
-                                            <div className="ml-3 mr-3">{new Date(save.createdAt).toLocaleDateString()}</div>
-                                            <button type="button" className="close ml-auto"
-                                                    onClick={this.deleteSave.bind(this, save)}
-                                                    aria-label="Close">
-                                                <i className="fas fa-trash"/>
-                                            </button>
+                                    return <li key={save._id} className="list-group-item list-group-item-info d-flex flex-row flex-nowrap">
+                                        <div
+                                            className="d-flex flex-row flex-nowrap button-list-item justify-content-end"
+                                            onClick={this.handleLoading.bind(this, save)}>
+                                            <div className="ml-0 mr-3">{save.name}</div>
+                                            <div
+                                                className="mr-2">
+                                                {new Date(save.createdAt).toLocaleDateString()}
+                                                &nbsp;
+                                                {new Date(save.createdAt).toLocaleTimeString()}
+                                            </div>
+
+
                                         </div>
+                                        <button type="button" className="close ml-auto"
+                                                onClick={this.deleteSave.bind(this, save)}
+                                                aria-label="Close">
+                                            <i className="fas fa-trash"/>
+                                        </button>
                                     </li>
                                 })}
                             </ul>
@@ -124,6 +132,7 @@ class CloudModal extends Component {
 
     handleAddingNew() {
         this.props.onChange("upload", this.state.newSaveName);
+        this.loadSaves();
         this.closeAddingModal();
     }
 
@@ -139,12 +148,7 @@ class CloudModal extends Component {
 
     deleteSave(save) {
         return axios.delete(`${savesUrl}/${save._id}`)
-            .then(save => {
-                let savesCopy = [...this.state.saves];
-                let index = savesCopy.indexOf(save);
-                savesCopy.splice(index, 1);
-                this.setState({saves: savesCopy})
-            })
+            .then(save => this.loadSaves())
             .catch();
     }
 
@@ -171,15 +175,13 @@ class CloudModal extends Component {
 
     loadSaves() {
         if (this.props.auth.isAuthenticated()) {
-            return this.props.auth.getUserInfo()
-                .then(info =>
-                    axios.get(`${savesUrl}?sub=${info.sub}`))
+            let sub = localStorage.getItem('sub');
+            axios.get(`${savesUrl}?sub=${sub}`)
                 .then(saves => {
                     this.setState({saves: saves.data});
-                    this.props.onChange("update", saves.data)
                 })
                 .catch(err => console.error(err));
-        } else this.props.onChange("update", []);
+        }
     }
 }
 

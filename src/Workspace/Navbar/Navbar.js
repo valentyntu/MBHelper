@@ -37,7 +37,7 @@ class Navbar extends Component {
                     <button className={"btn btn-info btn-block"}
                             onClick={() => history.replace("/help")}
                     >
-                        <i className="fas fa-question fa-2x"/>
+                        <i className="fas fa-question"/>
                     </button>
                 </div>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -117,9 +117,9 @@ class Navbar extends Component {
         if (action === "download") {
             this.load(value);
         }
-        if (action === "update") {
-            this.setState({loadedSaves: value})
-        }
+        // if (action === "update") {
+        //     this.setState({loadedSaves: value})
+        // }
     }
 
     load(saveOrPreset) {
@@ -136,6 +136,8 @@ class Navbar extends Component {
                 )
             });
         }
+        delete newTableState._id;
+
         this.props.onUpdate(newTableState);
     }
 

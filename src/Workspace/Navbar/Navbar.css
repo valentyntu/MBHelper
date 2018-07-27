@@ -8,15 +8,15 @@
 }
 
 .login {
-    font-size: x-large;
+    font-size: large;
 }
 
 .logout {
-    font-size: x-large;
+    font-size: large;
 }
 
 .greeting {
-    font-size: x-large;
+    font-size: large;
     color: white;
     margin-right: 10px;
 }
