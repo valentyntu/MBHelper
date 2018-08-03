@@ -25,11 +25,17 @@ class Navbar extends Component {
     const isAuthenticated = this.props.auth.isAuthenticated;
     return (
         <nav className={'navbar navbar-dark bg-dark navbar-expand-lg'}>
-          <a className="navbar-brand" href="/">
+          <a className='navbar-brand'
+             onClick={e => {
+               e.preventDefault();
+               history.replace('/');
+             }}
+             href={'/'}
+          >
             <img src={logo}
-                 className="d-inline-block align-top App-logo-small" alt=""/>
+                 className="d-inline-block align-content-around App-logo-small mr-1" alt=""/>
+            M&B Trade Helper
           </a>
-          <a className={'navbar-brand'} href={'/'}>M&B Trade Helper</a>
           <div className={'help-container my-2 mx-lg-2'}>
             <button className={'btn btn-info btn-block'}
                     onClick={() => history.replace('/help')}
@@ -83,12 +89,11 @@ class Navbar extends Component {
                 </li>
               }
             </ul>
-
-
             {
               !isAuthenticated &&
               <div className={'login-container my-2 my-lg-0'}>
-                <button className={'btn btn-success login btn-block'} onClick={this.props.loginUser}>
+                <button className={'btn btn-success login btn-block'}
+                        onClick={this.props.loginUser}>
                   Log in
                 </button>
               </div>
@@ -96,8 +101,11 @@ class Navbar extends Component {
             {
               isAuthenticated &&
               <div className={'login-container my-2 my-lg-0'}>
-                <span className={'greeting'}>Hi, {this.props.auth.user.nickname}!</span>
-                <button className={'btn btn-success logout btn-block'} onClick={this.props.logoutUser}>
+                <span className={'greeting'}>
+                  Hi, {this.props.auth.user.nickname}!
+                </span>
+                <button className={'btn btn-success logout btn-block'}
+                        onClick={this.props.logoutUser}>
                   Log out
                 </button>
               </div>

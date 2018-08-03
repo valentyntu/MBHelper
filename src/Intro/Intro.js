@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import './Intro.css'
-import logo from '../icon.png'
+import './Intro.css';
+import logo from '../icon.png';
+import history from '../history';
 
 class Intro extends Component {
 
@@ -14,7 +15,10 @@ class Intro extends Component {
           <p className={'App-intro'}>
             This application is designed to help with trade when playing Mount & Blade.
           </p>
-          <a className={'btn btn-secondary btn-fixed'} href={'/workspace'}>
+          <a className={'btn btn-secondary btn-fixed'} onClick={e => {
+            e.preventDefault();
+            history.replace('/workspace');
+          }} href={'/workspace'}>
             Get started!
           </a>
         </div>

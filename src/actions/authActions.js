@@ -19,14 +19,16 @@ const authenticateUser = () => dispatch => {
           payload: user
         });
         localStorage.setItem('profile', JSON.stringify(user));
+        history.replace('/workspace');
       });
     } else if (err) {
       dispatch({
         type: GET_ERRORS,
         payload: err
-      })
+      });
+      history.replace('/workspace');
     }
-    history.replace('/workspace');
+
   });
 };
 
