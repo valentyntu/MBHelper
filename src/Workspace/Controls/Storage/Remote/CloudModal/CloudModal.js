@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
-import {addSave, chooseSave, deleteSave, loadSaves} from '../../../../../actions/saveActions'
-
+import {addSave, chooseSave, closeCloudModal, deleteSave, loadSaves} from '../../../../../actions/saveActions'
 import './CloudModal.css';
 
 const modalStyles = {
@@ -20,8 +19,6 @@ class CloudModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false,
-      isUploading: false,
       newSaveName: ''
     };
 
@@ -31,16 +28,18 @@ class CloudModal extends Component {
 
   render() {
     const {fromUser} = this.props.saves;
+    const isOpen = this.props.saves.modal.isOpen;
+    const isUploading = this.props.saves.modal.isUploading;
     return (
         <Modal
-            isOpen={this.state.isOpen}
+            isOpen={isOpen}
             onAfterOpen={this.afterOpenModal}
             onRequestClose={this.closeAddingModal}
             contentLabel="Adding modal"
             style={modalStyles}
         >
           {
-            this.state.isUploading &&
+            isUploading &&
             <div>
               <div className="modal-header">
                 <h5 className="modal-title">
@@ -66,7 +65,7 @@ class CloudModal extends Component {
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-success"
-                        onClick={this.uploadNewSave.bind(this)}>
+                        onClick={this.uploadSave.bind(this)}>
                   Upload
                 </button>
                 <button type="button" className="btn btn-danger"
@@ -77,7 +76,7 @@ class CloudModal extends Component {
             </div>
           }
           {
-            !this.state.isUploading &&
+            !isUploading &&
             <div>
               {
                 <div className="modal-header">
@@ -139,26 +138,16 @@ class CloudModal extends Component {
     this.props.deleteSave(save);
   }
 
-  openAddingModal() {
-    this.setState({isOpen: true});
-  }
-
   afterOpenModal() {
   }
 
   closeAddingModal() {
-    this.setState({isOpen: false});
+    this.props.closeCloudModal();
   }
 
   componentWillMount() {
+    Modal.setAppElement('body');
     this.loadSaves();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      isOpen: nextProps.saves.modal.isOpen,
-      isUploading: nextProps.saves.modal.isUploading
-    });
   }
 
   loadSaves() {
@@ -167,21 +156,21 @@ class CloudModal extends Component {
     }
   }
 
-  uploadNewSave() {
+  uploadSave() {
+    this.closeAddingModal();
     let save = {...this.props.tableState};
-    this.props.auth.getUserInfo()
-        .then(userInfo => {
-          save.sub = userInfo.sub;
-          save.name = this.state.newSaveName;
-          this.props.addSave(save);
-        })
+    save.sub = this.props.auth.user.sub;
+    save.name = this.state.newSaveName;
+    delete save._id;
+    this.props.addSave(save);
   }
 }
 
 const mapStateToProps = state => ({
+  tableState: state.table.state,
   auth: state.auth,
   saves: state.saves,
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, {loadSaves, deleteSave, addSave, chooseSave})(CloudModal);
+export default connect(mapStateToProps, {loadSaves, deleteSave, addSave, chooseSave, closeCloudModal})(CloudModal);

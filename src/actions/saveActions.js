@@ -1,6 +1,6 @@
 import {
   ADD_SAVE,
-  CHOOSE_SAVE,
+  CHOOSE_SAVE, CLOSE_CLOUD_MODAL,
   DELETE_SAVE,
   GET_ERRORS,
   GET_SAVES,
@@ -44,7 +44,7 @@ export const addSave = (save) => dispatch => {
 
 export const deleteSave = (save) => dispatch => {
   axios.delete(`${savesUrl}/${save._id}`)
-      .then(deletedItem => {
+      .then(() => {
             dispatch({
               type: DELETE_SAVE,
               payload: save
@@ -75,16 +75,23 @@ export const loadSaveOrPreset = (saveOrPreset) => {
   })
 };
 
-export const openCloudSavingModal = () => dispatch => {
-  dispatch({
+export const openCloudSavingModal = () => {
+  return ({
     type: OPEN_SAVING_MODAL,
     payload: {isUploading: false}
   })
 };
 
-export const openCloudLoadingModal = () => dispatch => {
-  dispatch({
+export const openCloudLoadingModal = () => {
+  return ({
     type: OPEN_LOADING_MODAL,
     payload: {isUploading: true}
+  })
+};
+
+export const closeCloudModal = () => {
+  return ({
+    type: CLOSE_CLOUD_MODAL,
+    payload: {}
   })
 };

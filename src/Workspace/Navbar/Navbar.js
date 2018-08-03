@@ -6,8 +6,6 @@ import logo from '../../icon.png'
 import './Navbar.css'
 import history from '../../history';
 import CloudModal from '../Controls/Storage/Remote/CloudModal/CloudModal';
-import savesURL from '../Controls/Storage/Remote/savesURL';
-import axios from 'axios/index';
 import connect from 'react-redux/es/connect/connect';
 import {loadSaves, openCloudLoadingModal, openCloudSavingModal} from '../../actions/saveActions';
 import {loginUser, logoutUser} from '../../actions/authActions';
@@ -113,13 +111,6 @@ class Navbar extends Component {
           </div>
         </nav>
     )
-  }
-
-  uploadSave(name) {
-    let save = {...this.props.tableState};
-    save.sub = this.props.auth.user.sub;
-    save.name = name;
-    return axios.post(savesURL, save);
   }
 
   openLoadModal() {
