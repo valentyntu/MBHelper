@@ -12,12 +12,12 @@ import {prepareSaveOrPreset} from '../../service/tableService';
 
 class Table extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = prepareSaveOrPreset(props.initialState);
-        this.addingModal = React.createRef();
-        this.confirmationModal = React.createRef();
-    }
+  constructor(props) {
+    super(props);
+    this.state = prepareSaveOrPreset(props.initialState);
+    this.addingModal = React.createRef();
+    this.confirmationModal = React.createRef();
+  }
 
   render() {
     return (
@@ -46,12 +46,13 @@ class Table extends Component {
               return <tr key={city}>
                 <City key={city} cityName={city}/>
                 {this.state.products.map((product) => {
-                  return <Prices key={city + '-' + product}
-                                 onChange={this.handlePriceChange.bind(this, city, product)}
-                                 isBuyPriceMin={this.checkMinPrice(product, this.getCurrentPrice(city, product, 'buy'))}
-                                 isSellPriceMax={this.checkMaxPrice(product, this.getCurrentPrice(city, product, 'sell'))}
-                                 buyPrice={this.getCurrentPrice(city, product, 'buy')}
-                                 sellPrice={this.getCurrentPrice(city, product, 'sell')}
+                  return <Prices
+                      key={city + '-' + product}
+                      onChange={this.handlePriceChange.bind(this, city, product)}
+                      isBuyPriceMin={this.checkMinPrice(product, this.getCurrentPrice(city, product, 'buy'))}
+                      isSellPriceMax={this.checkMaxPrice(product, this.getCurrentPrice(city, product, 'sell'))}
+                      buyPrice={this.getCurrentPrice(city, product, 'buy')}
+                      sellPrice={this.getCurrentPrice(city, product, 'sell')}
                   />
                 })}
                 <td>

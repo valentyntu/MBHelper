@@ -26,7 +26,7 @@ const presets = [
       'Yalen'
     ],
     products: [
-      'Cloth', 'Grain', 'Iron', 'Tools'
+      'Cloth', 'Iron', 'Tools'
     ]
   },
   {
