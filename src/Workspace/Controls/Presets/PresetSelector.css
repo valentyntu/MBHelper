@@ -1,10 +1,10 @@
-.PresetSelector-select{
+.PresetSelector-select {
     font-size: medium;
     height: auto;
     width: auto;
 }
 
-.PresetSelector-container{
+.PresetSelector-container {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -12,6 +12,6 @@
     justify-content: center;
 }
 
-.selector-load-btn{
+.selector-load-btn {
     font-size: medium;
 }

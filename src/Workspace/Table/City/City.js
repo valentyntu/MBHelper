@@ -8,10 +8,6 @@ class City extends Component {
             <th className={"City"}>{this.props.cityName}</th>
         )
     }
-
-    componentDidMount() {
-
-    }
 }
 
 export default City;

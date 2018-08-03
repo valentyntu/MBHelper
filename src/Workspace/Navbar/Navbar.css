@@ -27,13 +27,17 @@
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
-.help-container{
+.help-container {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
+}
+
+.upload-btn {
+    font-size: large;
 }

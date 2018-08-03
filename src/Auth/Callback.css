@@ -1,4 +1,4 @@
-.Callback-container{
+.Callback-container {
     height: 80vh;
     display: flex;
     flex-direction: column;
@@ -7,6 +7,6 @@
     justify-content: center;
 }
 
-.Callback-image{
+.Callback-image {
     max-height: 25vh;
 }

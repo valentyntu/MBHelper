@@ -1,4 +1,4 @@
-.Intro{
+.Intro {
     display: flex;
     flex-direction: column;
 }
@@ -32,12 +32,12 @@
     margin-left: 15px;
 }
 
-.App-logo{
+.App-logo {
     display: flex;
     flex-grow: revert;
     height: 25vh;
 }
 
-.btn-fixed{
+.btn-fixed {
     align-self: center;
 }

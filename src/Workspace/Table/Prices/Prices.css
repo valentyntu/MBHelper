@@ -9,7 +9,6 @@
     align-items: center;
 }
 
-
 .Prices-input {
     border: 1px solid transparent;
     background-color: transparent;
@@ -26,17 +25,17 @@
     text-align: right;
 }
 
-.Prices-value-separator{
+.Prices-value-separator {
     margin-left: 2px;
     margin-right: 2px;
 }
 
-.Prices-min-price{
+.Prices-min-price {
     border: 1px solid #28a745;
     border-radius: 5px;
 }
 
-.Prices-max-price{
+.Prices-max-price {
     border: 1px solid #a70b0a;
     border-radius: 5px;
 }
