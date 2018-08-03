@@ -12,7 +12,7 @@ class Intro extends Component {
             <img src={logo} className={'App-logo'} alt="logo"/>
             <h1 className="App-title">Mount & Blade Trade Helper</h1>
           </header>
-          <p className={'App-intro'}>
+          <p className='App-intro px-3 mt-2'>
             This application is designed to help with trade when playing Mount & Blade.
           </p>
           <a className={'btn btn-secondary btn-fixed'} onClick={e => {

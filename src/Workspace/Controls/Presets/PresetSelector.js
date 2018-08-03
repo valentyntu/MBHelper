@@ -17,8 +17,8 @@ class PresetSelector extends Component {
 
   render() {
     return (
-        <div className={'PresetSelector-container'}>
-          <button className={'btn btn-primary selector-load-btn'}
+        <div className='PresetSelector-container'>
+          <button className={'selector-load-btn btn btn-primary'}
                   onClick={() => this.props.loadSaveOrPreset(this.state.presets[this.select.current.value])}
           >Load Preset
           </button>
