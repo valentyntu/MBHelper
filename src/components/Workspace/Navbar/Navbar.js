@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import PresetSelector from '../Controls/Presets/PresetSelector';
 import FileSaver from '../Controls/Storage/Local/FileSaver/FileSaver';
 import FileLoader from '../Controls/Storage/Local/FileLoader/FileLoader';
-import logo from '../../icon.png'
+import logo from '../../../icon.png'
 import './Navbar.css'
-import history from '../../history';
+import history from '../../../history';
 import CloudModal from '../Controls/Storage/Remote/CloudModal/CloudModal';
 import connect from 'react-redux/es/connect/connect';
-import {loadSaves, openCloudLoadingModal, openCloudSavingModal} from '../../actions/saveActions';
-import {loginUser, logoutUser} from '../../actions/authActions';
+import {loadSaves, openCloudLoadingModal, openCloudSavingModal} from '../../../actions/saveActions';
+import {loginUser, logoutUser} from '../../../actions/authActions';
 
 class Navbar extends Component {
   constructor(props) {

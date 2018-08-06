@@ -4,9 +4,9 @@ import './App.css';
 import {Route, Router, Switch} from 'react-router-dom';
 import history from './history';
 
-import Workspace from './Workspace/Workspace';
-import Callback from './Auth/Callback';
-import Intro from './Intro/Intro';
+import Workspace from './components/Workspace/Workspace';
+import Callback from './components/Callback/Callback';
+import Intro from './components/Intro/Intro';
 import connect from 'react-redux/es/connect/connect';
 import {handleAuthentication} from './actions/authActions';
 

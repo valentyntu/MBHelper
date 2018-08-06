@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './PresetSelector.css'
 import axios from 'axios';
 import connect from 'react-redux/es/connect/connect';
-import {loadSaveOrPreset} from '../../../actions/saveActions';
+import {loadSaveOrPreset} from '../../../../actions/saveActions';
 
 const PRESETS_URL = 'https://mb-helper.herokuapp.com/api/presets';
 

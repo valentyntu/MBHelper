@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Intro.css';
-import logo from '../icon.png';
-import history from '../history';
+import logo from '../../icon.png';
+import history from '../../history';
 
 class Intro extends Component {
 

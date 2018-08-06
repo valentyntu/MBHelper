@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import loading from '../assets/loading.svg'
+import loading from '../../assets/loading.svg'
 import './Callback.css'
 
 class Callback extends Component {

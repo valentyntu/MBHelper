@@ -9,7 +9,7 @@ import {
   OPEN_SAVING_MODAL
 } from './types';
 import axios from 'axios';
-import savesUrl from '../Workspace/Controls/Storage/Remote/savesURL';
+import savesUrl from '../components/Workspace/Controls/Storage/Remote/savesURL';
 import {prepareSaveOrPreset} from '../service/tableService';
 
 export const loadSaves = (sub) => dispatch => {

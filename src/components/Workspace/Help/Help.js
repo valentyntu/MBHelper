@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Help.css';
-import history from '../history';
+import history from '../../../history';
 
 class Help extends Component {
   render() {

@@ -1,4 +1,4 @@
-import presets from '../Workspace/Controls/Presets/Presets';
+import presets from '../components/Workspace/Controls/Presets/Presets';
 import {UPDATE_TABLE_STATE} from '../actions/types';
 
 const initialState = {

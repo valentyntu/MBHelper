@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
-import {addSave, chooseSave, closeCloudModal, deleteSave, loadSaves} from '../../../../../actions/saveActions'
+import {addSave, chooseSave, closeCloudModal, deleteSave, loadSaves} from '../../../../../../actions/saveActions'
 import './CloudModal.css';
 
 const modalStyles = {
