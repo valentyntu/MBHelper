@@ -1,6 +1,6 @@
 .Table-btn {
-    width: 19px;
-    height: 19px;
+    width: 21px;
+    height: 21px;
     border-radius: 50%;
     padding: 4px;
 }
@@ -11,7 +11,7 @@
 
 .icon-small {
     display: flex;
-    font-size: x-small;
+    font-size: small;
 }
 
 th {
