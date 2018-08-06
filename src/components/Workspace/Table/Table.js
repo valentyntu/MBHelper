@@ -8,7 +8,7 @@ import './Table.css'
 import connect from 'react-redux/es/connect/connect';
 import {updateTableState} from '../../../actions/tableActions'
 import {loadSaveOrPreset} from '../../../actions/saveActions'
-import {prepareSaveOrPreset} from '../../../service/tableService';
+import {prepareSaveOrPreset} from '../../../services/tableService';
 
 class Table extends Component {
 

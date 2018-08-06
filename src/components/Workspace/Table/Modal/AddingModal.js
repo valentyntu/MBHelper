@@ -112,6 +112,10 @@ class AddingModal extends Component {
     this.setState({isOpen: false});
   }
 
+  componentWillMount(){
+    Modal.setAppElement('body');
+  }
+
 }
 
 export default AddingModal;

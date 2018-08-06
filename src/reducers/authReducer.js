@@ -1,5 +1,5 @@
 import {LOG_IN, LOG_OUT} from '../actions/types';
-import {isAuthenticated, setAuthToken} from '../service/authService';
+import {isAuthenticated, setAuthToken} from '../services/authService';
 
 function init() {
   setAuthToken(localStorage.getItem('id_token'));

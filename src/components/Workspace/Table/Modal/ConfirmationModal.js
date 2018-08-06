@@ -80,6 +80,7 @@ class ConfirmationModal extends Component {
   }
 
   componentWillMount() {
+    Modal.setAppElement('body');
   }
 }
 

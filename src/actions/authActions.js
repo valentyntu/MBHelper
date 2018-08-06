@@ -1,4 +1,4 @@
-import {auth, getUserInfo, logout, setSession} from '../service/authService';
+import {auth, getUserInfo, logout, setSession} from '../services/authService';
 
 import {GET_ERRORS, LOG_IN, LOG_OUT} from './types';
 import history from '../history';

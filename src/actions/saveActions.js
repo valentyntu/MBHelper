@@ -10,7 +10,7 @@ import {
 } from './types';
 import axios from 'axios';
 import savesUrl from '../components/Workspace/Controls/Storage/Remote/savesURL';
-import {prepareSaveOrPreset} from '../service/tableService';
+import {prepareSaveOrPreset} from '../services/tableService';
 
 export const loadSaves = (sub) => dispatch => {
   axios.get(`${savesUrl}?sub=${sub}`)
