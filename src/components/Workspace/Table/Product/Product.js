@@ -12,7 +12,7 @@ class Product extends Component {
                     </span>
                     <button onClick={this.handleRemoveProduct.bind(this)}
                             className={"btn btn-danger Table-btn ml-1"}>
-                        <i className="fas fa-minus"/>
+                        <i className="fas fa-minus icon-small"/>
                     </button>
                 </div>
             </th>

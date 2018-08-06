@@ -35,7 +35,7 @@ class Table extends Component {
                 <button onClick={this.showAddProductModal.bind(this)}
                         type={'button'}
                         className={'btn btn-success Table-btn'}>
-                  <i className="fas fa-plus"/>
+                  <i className="fas fa-plus icon-small"/>
                 </button>
               </th>
             </tr>
@@ -58,7 +58,7 @@ class Table extends Component {
                 <td>
                   <button onClick={this.showRemoveCityConfirmation.bind(this, city)}
                           className={'btn btn-danger Table-btn'}>
-                    <i className="fas fa-minus"/>
+                    <i className="fas fa-minus icon-small"/>
                   </button>
                 </td>
               </tr>
@@ -69,7 +69,7 @@ class Table extends Component {
                 <button onClick={this.showAddCityModal.bind(this)}
                         type={'button'}
                         className={'btn btn-success Table-btn'}>
-                  <i className="fas fa-plus"/>
+                  <i className="fas fa-plus icon-small"/>
                 </button>
               </th>
             </tr>
