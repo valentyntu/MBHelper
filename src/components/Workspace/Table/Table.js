@@ -5,7 +5,7 @@ import AddingModal from './Modal/AddingModal';
 import ConfirmationModal from './Modal/ConfirmationModal';
 import Product from './Product/Product';
 import './Table.css'
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import {updateTableState} from '../../../actions/tableActions'
 import {loadSaveOrPreset} from '../../../actions/saveActions'
 import {prepareSaveOrPreset} from '../../../services/tableService';

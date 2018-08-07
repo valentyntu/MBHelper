@@ -7,9 +7,8 @@ import history from './history';
 import Workspace from './components/Workspace/Workspace';
 import Callback from './components/Callback/Callback';
 import Intro from './components/Intro/Intro';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import {handleAuthentication} from './actions/authActions';
-
 
 class App extends Component {
   render() {

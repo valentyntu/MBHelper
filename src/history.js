@@ -1,3 +1,10 @@
 import createHistory from 'history/createBrowserHistory'
 
-export default createHistory();
+let history;
+
+if (typeof document !== 'undefined') {
+
+  history = createHistory()
+}
+
+export default history

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './PresetSelector.css'
 import axios from 'axios';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import {loadSaveOrPreset} from '../../../../actions/saveActions';
 
 const PRESETS_URL = 'https://mb-helper.herokuapp.com/api/presets';
@@ -18,7 +18,7 @@ class PresetSelector extends Component {
   render() {
     return (
         <div className='PresetSelector-container'>
-          <button className={'selector-load-btn btn btn-primary'}
+          <button className='selector-load-btn btn btn-primary'
                   onClick={() => this.props.loadSaveOrPreset(this.state.presets[this.select.current.value])}
           >Load Preset
           </button>

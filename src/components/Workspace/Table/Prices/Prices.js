@@ -50,10 +50,6 @@ class Prices extends Component {
       this.props.onChange('sell', 0);
     }
   }
-
-  componentDidMount() {
-
-  }
 }
 
 export default Prices;

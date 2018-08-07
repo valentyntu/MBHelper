@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './FileLoader.css'
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import {loadSaveOrPreset} from '../../../../../../actions/saveActions'
 
 class FileLoader extends Component {

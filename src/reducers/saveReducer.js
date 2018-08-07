@@ -1,12 +1,12 @@
 import {
   ADD_SAVE,
   CHOOSE_SAVE,
+  CLOSE_CLOUD_MODAL,
   DELETE_SAVE,
   GET_SAVES,
   LOAD_SAVE_OR_PRESET,
   OPEN_LOADING_MODAL,
-  OPEN_SAVING_MODAL,
-    CLOSE_CLOUD_MODAL
+  OPEN_SAVING_MODAL
 } from '../actions/types';
 
 const initialState = {
@@ -62,9 +62,9 @@ export default function (state = initialState, action) {
     }
     case CLOSE_CLOUD_MODAL: {
       return {
-          ...state,
-        modal:{
-            isOpen: false
+        ...state,
+        modal: {
+          isOpen: false
         }
       }
     }

@@ -6,7 +6,7 @@ import logo from '../../../icon.png'
 import './Navbar.css'
 import history from '../../../history';
 import CloudModal from '../Controls/Storage/Remote/CloudModal/CloudModal';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import {loadSaves, openCloudLoadingModal, openCloudSavingModal} from '../../../actions/saveActions';
 import {loginUser, logoutUser} from '../../../actions/authActions';
 
