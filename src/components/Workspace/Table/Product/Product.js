@@ -3,29 +3,21 @@ import './Product.css'
 
 class Product extends Component {
 
-    render() {
-        return (
-            <th className={"Table-heading"}>
-                <div className={"row justify-content-center align-items-center"}>
-                    <span>
-                        {this.props.productName}
-                    </span>
-                    <button onClick={this.handleRemoveProduct.bind(this)}
-                            className={"btn btn-danger Table-btn ml-1"}>
-                        <i className="fas fa-minus icon-small"/>
-                    </button>
-                </div>
-            </th>
-        )
-    }
+  render() {
+    return (
+        <th className={'Table-heading'}>
+          {this.props.productName}
+          <button onClick={this.handleRemoveProduct.bind(this)}
+                  className={'btn btn-danger Table-btn ml-1'}>
+            <i className="fas fa-minus icon-small"/>
+          </button>
+        </th>
+    )
+  }
 
-    componentDidMount() {
-
-    }
-
-    handleRemoveProduct() {
-        this.props.onChange(this.props.productName);
-    }
+  handleRemoveProduct() {
+    this.props.onChange(this.props.productName);
+  }
 }
 
 export default Product;
