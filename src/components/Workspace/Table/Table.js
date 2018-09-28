@@ -5,7 +5,7 @@ import AddingModal from './Modal/AddingModal';
 import ConfirmationModal from './Modal/ConfirmationModal';
 import Product from './Product/Product';
 import './Table.css'
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {updateTableState} from '../../../actions/tableActions'
 import {loadSaveOrPreset} from '../../../actions/saveActions'
 import {prepareSaveOrPreset} from '../../../services/tableService';
@@ -55,12 +55,12 @@ class Table extends Component {
                       sellPrice={this.getCurrentPrice(city, product, 'sell')}
                   />
                 })}
-                <td>
+                <th>
                   <button onClick={this.showRemoveCityConfirmation.bind(this, city)}
                           className={'btn btn-danger Table-btn'}>
                     <i className="fas fa-minus icon-small"/>
                   </button>
-                </td>
+                </th>
               </tr>
             })}
 
@@ -260,3 +260,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {updateTableState, loadSaveOrPreset})(Table);
+export {Table};
